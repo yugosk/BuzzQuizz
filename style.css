@@ -103,10 +103,11 @@ section.inputs-quizz input{
     border-radius: 5px;
 }
 
-section.inputs-quizz button{
+section.inputs-quizz button {
     height: 55px;
     width: 360px;
     margin-top: 60px;
+    margin-bottom: 10px;
 
     background-color: #ec362d;
     border: none;
@@ -143,4 +144,38 @@ section.inputs-quizz .adicionar-pergunta h2{
     margin: 0;
     display: flex;
     align-items: center;
+}
+
+.img-quizz-pronto{
+    flex-direction: column;
+    display: inline-block;
+    position: relative;
+    width: 500px;
+    height: 266px; 
+}
+
+.quizz-pronto{
+    height: 100%;
+    width: 40%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.quizz-pronto button{
+    height: 55px;
+    width: 360px;
+    margin-top: 60px;
+    margin-bottom: 10px;
+
+    background-color: #ec362d;
+    border: none;
+    border-radius: 15px;
+
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    color: #FFFFFF; 
 }
