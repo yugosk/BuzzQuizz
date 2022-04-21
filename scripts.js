@@ -126,35 +126,56 @@ function QuizzPronto(){
  `;
 }
 
+const arrayproximonivel = [];
+    function mincaracteres(){
+        let titulonivel = true;
+        const titulo = document.querySelector(".crie-seus-niveis #titulo").value;
+        if (titulo.length < 20){
+            titulonivel = false;                                      
+            }
+            arrayproximonivel.push(titulonivel);
+            return titulonivel;
+    }
 
+    function porcentagemmin(){
+        let porcentagemmin = true; 
+        const porcentagem = document.querySelector(".crie-seus-niveis #porcentagem").value;
+        if ( 0 > porcentagem ||  porcentagem > 100){
+            porcentagemmin = false;
+            };
+            arrayproximonivel.push(porcentagemmin);
+            return porcentagemmin;
+    }
 
-function mincaracteres(){
-    let titulo = document.querySelector(".crie-seus-niveis #titulo").value;
-      if (titulo.length < 20){                                       
-           console.log("não executar");
-        };
-}
+    //essa função verifica se sua url termina em qualquer uma dessas quatro extensões.
+    //me retorna um valor true ou false
+    function checkURL() {
+        const linkurl = document.querySelector(".crie-seus-niveis #linkurl").value;
+        const urlcorreto = (linkurl.match(/\.(jpeg|jpg|gif|png)$/) != null);
+        arrayproximonivel.push(urlcorreto);
+        return urlcorreto;
+    }
 
-function porcentagemmin(){
-    let porcentagem = document.querySelector(".crie-seus-niveis #porcentagem").value;
-    console.log(porcentagem);
-      if ( 0 > porcentagem ||  porcentagem > 100){
-          console.log("não executar");
-        };
-}
+    function mincaracteresDescricao(){
+        let mindescricao = true;
+        const titulo = document.querySelector(".crie-seus-niveis #descricao").value;
+        if (titulo.length < 30){                                       
+            mindescricao = false;
+            }
+            arrayproximonivel.push(mindescricao);
+            return mindescricao;
+    }
 
-//essa função verifica se sua url termina em qualquer uma dessas quatro extensões.
-//me retorna um valor true ou false
-function checkURL() {
-    let linkurl = document.querySelector(".crie-seus-niveis #linkurl").value;
-    const urlcorreto = (linkurl.match(/\.(jpeg|jpg|gif|png)$/) != null);
-    return urlcorreto;
-}
-
-function mincaracteresDescricao(){
-    let titulo = document.querySelector(".crie-seus-niveis #descricao").value;
-      if (titulo.length < 30){                                       
-           console.log("não executar");
-        };
-}
-
+    function proximonivel(){
+        mincaracteres();
+        porcentagemmin();
+        checkURL();
+        mincaracteresDescricao();
+        let arr;
+        arr = arrayproximonivel;
+        if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true ){
+             return true;
+        } else {
+             return false;
+        } 
+    }
