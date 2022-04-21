@@ -83,7 +83,7 @@ function criarNiveis(){
             <h2>Nível 1</h2>
             <input type="text" name="" id="titulo" placeholder="   Título do nível">
             <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
-            <input type="text" name="" id="" placeholder="   URL da imagem do nível">
+            <input type="text" name="" id="linkurl" placeholder="   URL da imagem do nível">
             <input type="text" name="" id="descricao" placeholder="   Descrição do nível">
         </div>
 
@@ -132,7 +132,6 @@ function mincaracteres(){
     let titulo = document.querySelector(".crie-seus-niveis #titulo").value;
       if (titulo.length < 20){                                       
            console.log("não executar");
-        
         };
 }
 
@@ -144,9 +143,18 @@ function porcentagemmin(){
         };
 }
 
+//essa função verifica se sua url termina em qualquer uma dessas quatro extensões.
+//me retorna um valor true ou false
+function checkURL() {
+    let linkurl = document.querySelector(".crie-seus-niveis #linkurl").value;
+    const urlcorreto = (linkurl.match(/\.(jpeg|jpg|gif|png)$/) != null);
+    return urlcorreto;
+}
+
 function mincaracteresDescricao(){
     let titulo = document.querySelector(".crie-seus-niveis #descricao").value;
       if (titulo.length < 30){                                       
            console.log("não executar");
         };
 }
+
