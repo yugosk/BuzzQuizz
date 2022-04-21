@@ -19,6 +19,7 @@ header{
 }
 
 body .container{
+    padding: 60px;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -58,8 +59,8 @@ section p{
 }
 
 section.inputs-quizz{
-    height: 430px;
-    width: 80%;
+    height: 100%;
+    width: 40%;
 
     display: flex;
     flex-direction: column;
@@ -69,24 +70,27 @@ section.inputs-quizz{
 section.inputs-quizz h2{
     font-size: 20px;
     font-weight: 700;
+    margin-bottom: 10px;   
+}
+section.inputs-quizz .nome-sessoes{
     margin: 35px 0;
 }
 section.inputs-quizz div{
-    height: 255px;
+    background-color: #FFFFFF;
+    height: 100%;
     width: 90%;
 
-    padding: 20px 0;
+    padding: 20px 20px;
     box-sizing: border-box;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
 }
 section.inputs-quizz input{
     height: 45px;
-    width: 90%;
+    margin: 5px 0;
 
     display: flex;
     align-items: center;
@@ -95,13 +99,14 @@ section.inputs-quizz input{
     font-size: 20px;
     font-weight: 400;
     color: #BABABA;
-
-    border-style: 1px solid #D1D1D1;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
 }
+
 section.inputs-quizz button{
     height: 55px;
     width: 360px;
-    margin-top: 30px;
+    margin-top: 60px;
 
     background-color: #ec362d;
     border: none;
@@ -117,4 +122,25 @@ section.inputs-quizz button{
 }
 .inputs-quizz.crie-suas-perguntas{
     
+}
+.inputs-quizz div.respostas{
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
+}
+
+section.inputs-quizz .adicionar-pergunta{
+    padding: 0px 20px;
+    font-size: 25px;
+
+    box-sizing: border-box;
+    margin-top: 20px;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+section.inputs-quizz .adicionar-pergunta h2{
+    height: 75px;
+    margin: 0;
+    display: flex;
+    align-items: center;
 }
