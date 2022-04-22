@@ -22,6 +22,7 @@ function criarQuizz(){
 
 function verificarCriarQuizz(){
     
+    let quantidadePerguntas = parseInt(document.getElementById("quantidade-perguntas").value);
     const validarBotao = [false, false, false, false]; 
     const inputsCriarQuizz = document.querySelectorAll("input");
     
@@ -47,12 +48,12 @@ function verificarCriarQuizz(){
     }
     if(!validarBotao.includes(false)){
 
-        criarPerguntas();
+        criarPerguntas(quantidadePerguntas);
     }
 
 }
 
-function criarPerguntas(){
+function criarPerguntas(quantidadePerguntas){
     document.getElementById("comece-pelo-comeco").style.display = "none"; 
 
     document.querySelector(".container").innerHTML = `
@@ -87,20 +88,29 @@ function criarPerguntas(){
                 <input type="text" name="" id="" placeholder="   URL da imagem">
             </div>
 
-            <div class="adicionar-pergunta">
-            <h2>Pergunta 2</h2>
-            <ion-icon name="create-outline"></ion-icon>
-            </div>
-
-            <div class="adicionar-pergunta">
-            <h2>Pergunta 3</h2>
-            <ion-icon name="create-outline"></ion-icon>
-            </div>
-
-            <button onclick="criarNiveis(this)" id="button-criar-niveis">Prosseguir pra criar níveis</button>
-        </section>
         
     `;
+
+    for(let i = 1; i < quantidadePerguntas; i++){
+
+        document.querySelector(".inputs-quizz.crie-suas-perguntas").innerHTML += `
+        
+        <div class="adicionar-pergunta">
+            <h2>Pergunta ${i+1}</h2>
+            <ion-icon name="create-outline" onclick="adicionarPergunta(this)"></ion-icon>
+        </div>
+        
+        `;
+
+        if(i+1 == quantidadePerguntas){
+
+            document.querySelector(".crie-suas-perguntas").innerHTML += `
+        
+            <button onclick="criarNiveis(this)" id="button-criar-niveis">Prosseguir pra criar níveis</button>
+
+        `;
+        }
+    }
 }
 
 function criarNiveis(){
