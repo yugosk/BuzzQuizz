@@ -1,20 +1,20 @@
 function criarQuizz(){
 
-    document.getElementById("criar-quizz").style.display = "none"; 
+    document.getElementById("criar-quizz").style.display = "none";
     
     document.querySelector(".container").innerHTML = `
     
     <section class="inputs-quizz comece-pelo-comeco" id="comece-pelo-comeco">
         <h2 class="nome-sessoes">Comece pelo começo</h2>
         <div>
-            <input type="text" name="" id="" placeholder="   Título do seu quizz">
-            <input type="text" name="" id="" placeholder="   URL da imagem do seu quizz">
-            <input type="text" name="" id="" placeholder="   Quantidade de perguntas do quizz">
-            <input type="text" name="" id="" placeholder="   Quantidade de níveis do quizz">
+            <input type="text" name="" id="titulo-quizz" placeholder="   Título do seu quizz">
+            <input type="text" name="" id="url-imagem-quizz" placeholder="   URL da imagem do seu quizz">
+            <input type="text" name="" id="quantidade-perguntas" placeholder="   Quantidade de perguntas do quizz">
+            <input type="text" name="" id="quantidade-niveis" placeholder="   Quantidade de níveis do quizz">
         </div>
-        <button onclick="criarPerguntas(this)">Prosseguir para criar perguntas</button>
+        <button onclick="verificarCriarQuizz(this)" id="button-criar-perguntas">Prosseguir para criar perguntas</button>
     </section>
- 
+    
     `;
 
     // document.getElementById("button-criar-perguntas").disabled = "true";
@@ -63,20 +63,20 @@ function criarPerguntas(quantidadePerguntas){
             <h2 class="nome-sessoes">Criar suas perguntas</h2>
             <div>
                 <h2>Pergunta 1</h2>
-                <input type="text" name="" id="" placeholder="   Texto da pergunta">
-                <input type="text" name="" id="" placeholder="   Cor de fundo da pergunta">
+                <input type="text" name="" id="texto-pergunta" placeholder="   Texto da pergunta">
+                <input type="text" name="" id="cor-quizz" placeholder="   Cor de fundo da pergunta">
             </div>
 
             <div class="respostas">
                 <h2>Resposta Correta</h2>
-                <input type="text" name="" id="" placeholder="   Resposta correta">
-                <input type="text" name="" id="" placeholder="   URL da imagem">
+                <input type="text" name="" id="reposta-correta" placeholder="   Resposta correta">
+                <input type="text" name="" id="url-imagem-correta" placeholder="   URL da imagem">
             </div>
 
             <div class="respostas">
                 <h2>Resposta Incorretas</h2>
-                <input type="text" name="" id="" placeholder="   Resposta incorreta 1">
-                <input type="text" name="" id="" placeholder="   URL da imagem">
+                <input type="text" name="" id="resposta-incorreta" placeholder="   Resposta incorreta 1">
+                <input type="text" name="" id="url-imagem-incorreta" placeholder="   URL da imagem">
 
                 <input type="text" name="" id="" placeholder="   Resposta incorreta 2">
                 <input type="text" name="" id="" placeholder="   URL da imagem">
@@ -113,22 +113,6 @@ function criarPerguntas(quantidadePerguntas){
     }
 }
 
-function validarPerguntas() {
-    const validacaoHex = /^#[0-9A-F]{6}$/i
-    const validacaoURL = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/
-    const pergunta = document.querySelectorAll("input")
-    if (pergunta[0].value.length>=20 || validacaoHex.test(pergunta[1].value) === true || pergunta[2].value !== "" || pergunta[3].value
-    ||pergunta[4].value !== "" || validacaoURL.test(pergunta[5].value === true)) {
-        if (pergunta[6].value !== "" || validacaoURL.test(pergunta[7].value === true)) {
-            if (pergunta[8].value !== "" || validacaoURL.test(pergunta[9].value === true)) {
-                if (pergunta[10].value !== "" || validacaoURL.test(pergunta[11].value === true)) {
-                    criarNiveis()
-                } else {if (pergunta[10].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
-            } else {if (pergunta[8].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
-        } else {if (pergunta[6].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
-    } else {alert("Preencha os campos corretamente, por favor.")}
-} 
-
 function criarNiveis(){
      
     document.getElementById("crie-suas-perguntas").style.display = "none";
@@ -156,10 +140,12 @@ function criarNiveis(){
         <ion-icon name="create-outline" onclick=""></ion-icon>
         </div>
 
-        <button onclick="QuizzPronto(this)">Finalizar Quizz</button>
+        <button onclick="QuizzPronto(this)" id="button-quizz-pronto">Finalizar Quizz</button>
     </section>
 `;
 }
+
+
 
 function QuizzPronto(){
     document.getElementById("crie-seus-niveis").style.display = "none";
@@ -184,6 +170,8 @@ function QuizzPronto(){
 
 const arrayproximonivel = [];
     function mincaracteres(){
+        console.log("entrei na primeira");
+
         let titulonivel = true;
         const titulo = document.querySelector(".crie-seus-niveis #titulo").value;
         if (titulo.length < 20){
@@ -194,6 +182,8 @@ const arrayproximonivel = [];
     }
 
     function porcentagemmin(){
+        console.log("entrei na segunda");
+
         let porcentagemmin = true; 
         const porcentagem = document.querySelector(".crie-seus-niveis #porcentagem").value;
         if ( 0 > porcentagem ||  porcentagem > 100){
@@ -206,6 +196,8 @@ const arrayproximonivel = [];
     //essa função verifica se sua url termina em qualquer uma dessas quatro extensões.
     //me retorna um valor true ou false
     function checkURL() {
+        console.log("entrei na terceira");
+        
         const linkurl = document.querySelector(".crie-seus-niveis #linkurl").value;
         const urlcorreto = (linkurl.match(/\.(jpeg|jpg|gif|png)$/) != null);
         arrayproximonivel.push(urlcorreto);
@@ -213,6 +205,8 @@ const arrayproximonivel = [];
     }
 
     function mincaracteresDescricao(){
+        console.log("entrei na quarta");
+
         let mindescricao = true;
         const titulo = document.querySelector(".crie-seus-niveis #descricao").value;
         if (titulo.length < 30){                                       
@@ -223,6 +217,7 @@ const arrayproximonivel = [];
     }
 
     function proximonivel(){
+        console.log("entrei na ultima");
         mincaracteres();
         porcentagemmin();
         checkURL();
