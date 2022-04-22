@@ -171,6 +171,7 @@ const arrayproximonivel = [];
         porcentagemmin();
         checkURL();
         mincaracteresDescricao();
+        
         let arr;
         arr = arrayproximonivel;
         if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true ){
