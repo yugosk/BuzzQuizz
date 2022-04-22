@@ -17,10 +17,43 @@ function criarQuizz(){
  
     `;
 
+    // document.getElementById("button-criar-perguntas").disabled = "true";
 }
 
-function criarPerguntas(){
+function verificarCriarQuizz(){
+    
+    let quantidadePerguntas = parseInt(document.getElementById("quantidade-perguntas").value);
+    const validarBotao = [false, false, false, false]; 
+    const inputsCriarQuizz = document.querySelectorAll("input");
+    
+    for(let i = 0; i < inputsCriarQuizz.length; i++){
+        
+        if(inputsCriarQuizz[i].value == ""){
+            alert("Por favor, preencha todos os dados corretamente.");
+            return;
+        }
+    }
+    
+    if((inputsCriarQuizz[0].value.length >= 20) && (inputsCriarQuizz[0].value.length <= 65)){
+        validarBotao[0] = true;
+    }
+    if(inputsCriarQuizz[1].value.match(/\.(jpeg|jpg|gif|png)$/) != null){
+        validarBotao[1] = true;
+    }
+    if(parseInt(inputsCriarQuizz[2].value) >= 3){
+        validarBotao[2] = true;
+    }
+    if(parseInt(inputsCriarQuizz[3].value) >= 2){
+        validarBotao[3] = true;
+    }
+    if(!validarBotao.includes(false)){
 
+        criarPerguntas(quantidadePerguntas);
+    }
+
+}
+
+function criarPerguntas(quantidadePerguntas){
     document.getElementById("comece-pelo-comeco").style.display = "none"; 
 
     document.querySelector(".container").innerHTML = `
@@ -55,21 +88,46 @@ function criarPerguntas(){
                 <input type="text" name="" id="" placeholder="   URL da imagem">
             </div>
 
-            <div class="adicionar-pergunta">
-            <h2>Pergunta 2</h2>
-            <ion-icon name="create-outline"></ion-icon>
-            </div>
-
-            <div class="adicionar-pergunta">
-            <h2>Pergunta 3</h2>
-            <ion-icon name="create-outline"></ion-icon>
-            </div>
-
-            <button onclick="criarNiveis(this)">Prosseguir pra criar níveis</button>
-        </section>
         
     `;
+
+    for(let i = 1; i < quantidadePerguntas; i++){
+
+        document.querySelector(".inputs-quizz.crie-suas-perguntas").innerHTML += `
+        
+        <div class="adicionar-pergunta">
+            <h2>Pergunta ${i+1}</h2>
+            <ion-icon name="create-outline" onclick="adicionarPergunta(this)"></ion-icon>
+        </div>
+        
+        `;
+
+        if(i+1 == quantidadePerguntas){
+
+            document.querySelector(".crie-suas-perguntas").innerHTML += `
+        
+            <button onclick="criarNiveis(this)" id="button-criar-niveis">Prosseguir pra criar níveis</button>
+
+        `;
+        }
+    }
 }
+
+function validarPerguntas() {
+    const validacaoHex = /^#[0-9A-F]{6}$/i
+    const validacaoURL = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/
+    const pergunta = document.querySelectorAll("input")
+    if (pergunta[0].value.length>=20 || validacaoHex.test(pergunta[1].value) === true || pergunta[2].value !== "" || pergunta[3].value
+    ||pergunta[4].value !== "" || validacaoURL.test(pergunta[5].value === true)) {
+        if (pergunta[6].value !== "" || validacaoURL.test(pergunta[7].value === true)) {
+            if (pergunta[8].value !== "" || validacaoURL.test(pergunta[9].value === true)) {
+                if (pergunta[10].value !== "" || validacaoURL.test(pergunta[11].value === true)) {
+                    criarNiveis()
+                } else {if (pergunta[10].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
+            } else {if (pergunta[8].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
+        } else {if (pergunta[6].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
+    } else {alert("Preencha os campos corretamente, por favor.")}
+} 
 
 function criarNiveis(){
      
@@ -102,8 +160,6 @@ function criarNiveis(){
     </section>
 `;
 }
-
-
 
 function QuizzPronto(){
     document.getElementById("crie-seus-niveis").style.display = "none";
