@@ -145,8 +145,6 @@ function criarNiveis(){
 `;
 }
 
-
-
 function QuizzPronto(){
     document.getElementById("crie-seus-niveis").style.display = "none";
           document.querySelector(".container").innerHTML = `
@@ -168,14 +166,30 @@ function QuizzPronto(){
  `;
 }
 
-const arrayproximonivel = [];
+function validarPerguntas() {
+    const validacaoHex = /^#[0-9A-F]{6}$/i
+    const validacaoURL = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]))?(?:\?([^#]))?(?:#(.*))?$/
+    const pergunta = document.querySelectorAll("input")
+    if (pergunta[0].value.length>=20 || validacaoHex.test(pergunta[1].value) === true || pergunta[2].value !== "" || pergunta[3].value
+    ||pergunta[4].value !== "" || validacaoURL.test(pergunta[5].value === true)) {
+        if (pergunta[6].value !== "" || validacaoURL.test(pergunta[7].value === true)) {
+            if (pergunta[8].value !== "" || validacaoURL.test(pergunta[9].value === true)) {
+                if (pergunta[10].value !== "" || validacaoURL.test(pergunta[11].value === true)) {
+                    criarNiveis()
+                } else {if (pergunta[10].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
+            } else {if (pergunta[8].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
+        } else {if (pergunta[6].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
+    } else {alert("Preencha os campos corretamente, por favor.")}
+}
+
+let arrayproximonivel = [];
     function mincaracteres(){
         console.log("entrei na primeira");
 
         let titulonivel = true;
         const titulo = document.querySelector(".crie-seus-niveis #titulo").value;
-        if (titulo.length < 20){
-            titulonivel = false;                                      
+            if (titulo.length < 20){
+              titulonivel = false;                                      
             }
             arrayproximonivel.push(titulonivel);
             return titulonivel;
@@ -186,15 +200,14 @@ const arrayproximonivel = [];
 
         let porcentagemmin = true; 
         const porcentagem = document.querySelector(".crie-seus-niveis #porcentagem").value;
-        if ( 0 > porcentagem ||  porcentagem > 100){
-            porcentagemmin = false;
+            if ( 0 > porcentagem ||  porcentagem > 100){
+               porcentagemmin = false;
             };
             arrayproximonivel.push(porcentagemmin);
             return porcentagemmin;
     }
 
-    //essa função verifica se sua url termina em qualquer uma dessas quatro extensões.
-    //me retorna um valor true ou false
+
     function checkURL() {
         console.log("entrei na terceira");
         
@@ -217,7 +230,6 @@ const arrayproximonivel = [];
     }
 
     function proximonivel(){
-        console.log("entrei na ultima");
         mincaracteres();
         porcentagemmin();
         checkURL();
@@ -226,8 +238,10 @@ const arrayproximonivel = [];
         let arr;
         arr = arrayproximonivel;
         if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true ){
-             return true;
+               
+             
         } else {
-             return false;
-        } 
+             alert("Algum dos locais foram preenchidos errados");       
+        }
+        arrayproximonivel =[];
     }
