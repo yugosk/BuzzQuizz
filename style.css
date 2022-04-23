@@ -159,6 +159,15 @@ section.inputs-quizz .adicionar-pergunta h2{
     color: #FFFFFF;
 }
 
+.adicionar-nivel{
+    font-size: 25px;
+    margin-top: 20px;
+    position: relative;
+}
+.adicionar-nivel ion-icon{
+    position: absolute;
+    right: 20px;
+}
 .quizz-pronto{
     height: 100%;
     width: 40%;

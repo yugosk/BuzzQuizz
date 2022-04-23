@@ -113,59 +113,6 @@ function criarPerguntas(quantidadePerguntas){
     }
 }
 
-function criarNiveis(){
-     
-    document.getElementById("crie-suas-perguntas").style.display = "none";
-
-    document.querySelector(".container").innerHTML = `
-    <section class="inputs-quizz crie-seus-niveis" id = "crie-seus-niveis">
-
-        <h2 class="nome-sessoes">Agora, decida os níveis</h2>
-        <div>
-            <h2>Nível 1</h2>
-            <input type="text" name="" id="titulo" placeholder="   Título do nível">
-            <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
-            <input type="text" name="" id="linkurl" placeholder="   URL da imagem do nível">
-            <input type="text" name="" id="descricao" placeholder="   Descrição do nível">
-        </div>
-
-
-        <div class="adicionar-pergunta" >
-        <h2>Nível 2</h2>
-        <ion-icon name="create-outline" onclick=""></ion-icon>
-        </div>
-
-        <div class="adicionar-pergunta">
-        <h2>Nível 3</h2>
-        <ion-icon name="create-outline" onclick=""></ion-icon>
-        </div>
-
-        <button onclick="QuizzPronto(this)" id="button-quizz-pronto">Finalizar Quizz</button>
-    </section>
-`;
-}
-
-function QuizzPronto(){
-    document.getElementById("crie-seus-niveis").style.display = "none";
-          document.querySelector(".container").innerHTML = `
-        <div class="inputs-quizz quizz-pronto" id = "quizz-pronto">
-
-            <h2>Agora, decida os níveis</h2>
-
-            <div class ="img-quizz-pronto">
-                <img src="/imagens/Rectangle 34.svg" alt="">
-                <label>O quão Potterhead é você?</label>
-            </div>
-              
-          
-            <button onclick="">Acessar Quizz</button>
-              
-            <p>Voltar pra home</p>
-          
-        </div>
- `;
-}
-
 function validarPerguntas() {
     const validacaoHex = /^#[0-9A-F]{6}$/i
     const validacaoURL = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]))?(?:\?([^#]))?(?:#(.*))?$/
@@ -182,66 +129,129 @@ function validarPerguntas() {
     } else {alert("Preencha os campos corretamente, por favor.")}
 }
 
-let arrayproximonivel = [];
+ArrayCriarNiveis = [];
+
+function criarNiveis(){
+     
+    document.getElementById("crie-suas-perguntas").style.display = "none";
+
+    document.querySelector(".container").innerHTML = `
+    <section class="inputs-quizz crie-seus-niveis" id = "crie-seus-niveis">
+
+        <h2 class="nome-sessoes">Agora, decida os níveis</h2>
+        <div class="adicionar-nivel" id = "nivel1">
+            <h2>Nível 1</h2>
+
+            <ion-icon class = "icone" name="create-outline" onclick="proximoNivel(this)"></ion-icon>
+        </div>
+
+
+        <div class="adicionar-nivel" id = "nivel2">
+        <h2>Nível 2</h2>
+            <input type="text" name="" id="titulo"      placeholder="   Título do nível">
+            <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
+            <input type="text" name="" id="linkurl"     placeholder="   URL da imagem do nível">
+            <input type="text" name="" id="descricao"   placeholder="   Descrição do nível">
+        </div>
+
+        <div class="adicionar-nivel" id = "nivel3">
+        <h2>Nível 3</h2>
+
+        <ion-icon class = "icone" name="create-outline" onclick="proximoNivel(this)"></ion-icon>
+        </div>
+
+        <button onclick="QuizzPronto(this)" id="button-quizz-pronto">Finalizar Quizz</button>
+    </section>
+`;
+}
+
+let arrayproximoNivel = [];
     function mincaracteres(){
-        console.log("entrei na primeira");
 
         let titulonivel = true;
-        const titulo = document.querySelector(".crie-seus-niveis #titulo").value;
+        const titulo = document.getElementById("titulo").value;
             if (titulo.length < 20){
               titulonivel = false;                                      
             }
-            arrayproximonivel.push(titulonivel);
+            arrayproximoNivel.push(titulonivel);
             return titulonivel;
     }
 
     function porcentagemmin(){
-        console.log("entrei na segunda");
 
         let porcentagemmin = true; 
-        const porcentagem = document.querySelector(".crie-seus-niveis #porcentagem").value;
+        const porcentagem = document.getElementById("porcentagem").value;
             if ( 0 > porcentagem ||  porcentagem > 100){
                porcentagemmin = false;
             };
-            arrayproximonivel.push(porcentagemmin);
+            arrayproximoNivel.push(porcentagemmin);
             return porcentagemmin;
     }
 
 
     function checkURL() {
-        console.log("entrei na terceira");
-        
-        const linkurl = document.querySelector(".crie-seus-niveis #linkurl").value;
+
+        const linkurl = document.getElementById("linkurl").value;
         const urlcorreto = (linkurl.match(/\.(jpeg|jpg|gif|png)$/) != null);
-        arrayproximonivel.push(urlcorreto);
+        arrayproximoNivel.push(urlcorreto);
         return urlcorreto;
     }
 
     function mincaracteresDescricao(){
-        console.log("entrei na quarta");
 
         let mindescricao = true;
-        const titulo = document.querySelector(".crie-seus-niveis #descricao").value;
-        if (titulo.length < 30){                                       
+        const descricao = document.getElementById("descricao").value;
+        if (descricao.length < 30){                                       
             mindescricao = false;
             }
-            arrayproximonivel.push(mindescricao);
+            arrayproximoNivel.push(mindescricao);
             return mindescricao;
     }
 
-    function proximonivel(){
+    function proximoNivel(elemento){
+        const pai = elemento.parentNode;
+        console.log(pai);
         mincaracteres();
         porcentagemmin();
         checkURL();
         mincaracteresDescricao();
         
         let arr;
-        arr = arrayproximonivel;
+        arr = arrayproximoNivel;
         if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true ){
-               
-             
+               pai.innerHTML = `
+                <input type="text" name="" id="titulo"      placeholder="   Título do nível">
+                <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
+                <input type="text" name="" id="linkurl"     placeholder="   URL da imagem do nível">
+                <input type="text" name="" id="descricao"   placeholder="   Descrição do nível">
+            `
+            ArrayCriarNiveis.push({ titulo: titulo, porcentagem: porcentagem, URL: linkurl, descricao: descricao });
+            console.log(ArrayCriarNiveis);
+            
         } else {
              alert("Algum dos locais foram preenchidos errados");       
         }
-        arrayproximonivel =[];
+        arrayproximoNivel =[];
+    }
+
+    function QuizzPronto(){
+    
+        document.getElementById("crie-seus-niveis").style.display = "none";
+              document.querySelector(".container").innerHTML = `
+            <div class="inputs-quizz quizz-pronto" id = "quizz-pronto">
+    
+                <h2>Agora, decida os níveis</h2>
+    
+                <div class ="img-quizz-pronto">
+                    <img src="/imagens/Rectangle 34.svg" alt="">
+                    <label>O quão Potterhead é você?</label>
+                </div>
+                  
+              
+                <button onclick="">Acessar Quizz</button>
+                  
+                <p>Voltar pra home</p>
+              
+            </div>
+     `;
     }
