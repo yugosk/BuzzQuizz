@@ -21,7 +21,9 @@ header{
 body .container{
     box-sizing: border-box;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 section.criar-quizz{
@@ -56,7 +58,37 @@ section p{
     color:#ec362d;
     font-size: 20px;
 }
+.container main{
+    height: 100%;
+    width: 70%;
+}
+.container main section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.container main section div{
+    height: 180px;
+    width: 32%;
+    margin-bottom: 20px;
+    position: relative;
 
+}
+.container main section img{
+    height: 180px;
+    width: 100%;
+}
+.container main section div p{
+    font-size: 19px;
+    font-weight: 400;
+    color: #ffffff;
+    text-align: left;
+    word-break: break-word;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
 section.inputs-quizz{
     height: 100%;
     width: 40%;

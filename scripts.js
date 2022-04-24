@@ -1,7 +1,55 @@
+function solicitarQuizzes(){
+
+    const promisse = axios.get("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes");
+    promisse.then(renderizarQuizzes);
+
+    promisse.catch(function erro(erro){
+        alert(`Erro ${erro.data}. Por favor, atualize a página!`);
+    });
+}
+solicitarQuizzes();
+
+function renderizarQuizzes(objetoQuizzes){
+
+    for(let i = 0; i < objetoQuizzes.data.length; i++)
+    document.querySelector("main section").innerHTML += `
+    
+    <div>
+        <img src="${objetoQuizzes.data[i].image}" id="${objetoQuizzes.data[i].id}" onclick="buscarQuizzSelecionado(this)">
+        <p>${objetoQuizzes.data[i].title}</p>
+    </div>        
+
+    `;
+    buscarQuizzSelecionado(objetoQuizzes);
+}
+
+const infosQuizz = {
+    quizzes: "",
+    idQuizz: ""
+};
+
+function buscarQuizzSelecionado(objetoQuizzes){
+    
+    if(objetoQuizzes.status == '200'){
+
+        infosQuizz.quizzes = objetoQuizzes.data;
+        
+    } else if(typeof(objetoQuizzes) == 'object'){
+
+        infosQuizz.idQuizz = parseInt(objetoQuizzes.id);
+
+    }
+    if((infosQuizz.quizzes != "") && (infosQuizz.idQuizz != "")){
+        acessarQuizzSelecionado();
+    }
+}
+function acessarQuizzSelecionado(){
+    
+}
+
 function criarQuizz(){
 
-    document.getElementById("criar-quizz").style.display = "none";
-    
+    document.getElementById("criar-quizz").style.display = "none";  
     document.querySelector(".container").innerHTML = `
     
     <section class="inputs-quizz comece-pelo-comeco" id="comece-pelo-comeco">
@@ -16,8 +64,6 @@ function criarQuizz(){
     </section>
     
     `;
-
-    // document.getElementById("button-criar-perguntas").disabled = "true";
 }
 
 function verificarCriarQuizz(){
@@ -131,13 +177,13 @@ function criarNiveis(){
 
 
         <div class="adicionar-pergunta" >
-        <h2>Nível 2</h2>
-        <ion-icon name="create-outline" onclick=""></ion-icon>
+            <h2>Nível 2</h2>
+            <ion-icon name="create-outline" onclick=""></ion-icon>
         </div>
 
         <div class="adicionar-pergunta">
-        <h2>Nível 3</h2>
-        <ion-icon name="create-outline" onclick=""></ion-icon>
+            <h2>Nível 3</h2>
+            <ion-icon name="create-outline" onclick=""></ion-icon>
         </div>
 
         <button onclick="QuizzPronto(this)" id="button-quizz-pronto">Finalizar Quizz</button>
