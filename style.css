@@ -175,7 +175,6 @@ section.inputs-quizz .adicionar-pergunta h2{
     display: flex;
     align-items: center;
 }
-
 .img-quizz-pronto{
     flex-direction: column;
     display: inline-block;
@@ -183,14 +182,15 @@ section.inputs-quizz .adicionar-pergunta h2{
     width: 500px;
     height: 266px;
 }
-
 .img-quizz-pronto label{
     position: absolute;
+    font-weight: 400;
+    font-size: 23px;
+    line-height: 27px;
     left: 15px; 
     bottom: 15px; 
     color: #FFFFFF;
 }
-
 .adicionar-nivel{
     font-size: 25px;
     margin-top: 20px;
@@ -208,7 +208,17 @@ section.inputs-quizz .adicionar-pergunta h2{
     flex-direction: column;
     align-items: center;
 }
-
+div.inputs-quizz h2{
+    font-size: 22px;
+    font-weight: 700;
+    margin: 50px 0;
+}
+div.inputs-quizz p{
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    color: #818181;
+}
 
 .quizz-pronto button{
     height: 55px;
@@ -220,7 +230,7 @@ section.inputs-quizz .adicionar-pergunta h2{
     border: none;
     border-radius: 15px;
 
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 400;
     text-align: center;
     color: #FFFFFF; 

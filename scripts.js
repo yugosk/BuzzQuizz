@@ -1,11 +1,49 @@
-let quantNiveis;
-let contNiveis;
-let ArrayCriarNiveis = [];
-let arrayproximoNivel = [];
-let tituloNivel = "";
-let Porcent = "";
-let urlNivel = "";
-let DescricaoNivel = "";
+function solicitarQuizzes(){
+
+    const promisse = axios.get("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes");
+    promisse.then(renderizarQuizzes);
+
+    promisse.catch(function erro(erro){
+        alert(`Erro ${erro.data}. Por favor, atualize a página!`);
+    });
+}
+solicitarQuizzes();
+
+function renderizarQuizzes(objetoQuizzes){
+
+    for(let i = 0; i < objetoQuizzes.data.length; i++)
+    document.querySelector("main section").innerHTML += `
+    
+    <div>
+        <img src="${objetoQuizzes.data[i].image}" id="${objetoQuizzes.data[i].id}" onclick="buscarQuizzSelecionado(this)">
+        <p>${objetoQuizzes.data[i].title}</p>
+    </div> 
+
+    `;
+    buscarQuizzSelecionado(objetoQuizzes);
+}
+
+const infosQuizz = {
+    quizzes: "",
+    idQuizz: ""
+};
+
+function buscarQuizzSelecionado(objetoQuizzes){
+    
+    if(objetoQuizzes.status == '200'){
+        infosQuizz.quizzes = objetoQuizzes.data;
+        
+    } else if(typeof(objetoQuizzes) == 'object'){
+        infosQuizz.idQuizz = parseInt(objetoQuizzes.id);
+    }
+
+    if((infosQuizz.quizzes != "") && (infosQuizz.idQuizz != "")){
+        acessarQuizzSelecionado();
+    }
+}
+function acessarQuizzSelecionado(){
+    
+}
 
 function criarQuizz(){
 
@@ -135,6 +173,17 @@ function validarPerguntas() {
     } else {alert("Preencha os campos corretamente, por favor.")}
 }
 
+let quantNiveis;
+let contNiveis;
+let contador = 0;
+let ArrayCriarNiveis = [];
+let arrayproximoNivel = [];
+let arrayPorcent = [];
+let tituloNivel = "";
+let Porcent = "";
+let urlNivel = "";
+let DescricaoNivel = "";
+
 function criarNiveis(){
      
     document.getElementById("crie-suas-perguntas").style.display = "none";
@@ -187,6 +236,7 @@ function criarNiveis(){
             };
             arrayproximoNivel.push(porcentagemmin);
             Porcent = porcentagem;
+            arrayPorcent.push(Porcent);
             return Porcent;
     }
 
@@ -216,14 +266,19 @@ function criarNiveis(){
 
     function proximoNivel(elemento){
         const pai = elemento.parentNode;
-        console.log(pai);
+
+      for (i = 0;i< quantNiveis;i++ ){
+          if (arrayPorcent[i] == 0){
+              contador++
+              return contador
+          }
+      }
 
         mincaracteres();
         porcentagemmin();
         checkURL();
         mincaracteresDescricao();
         
-
         let arr;
         arr = arrayproximoNivel;
         if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true ){
@@ -233,7 +288,7 @@ function criarNiveis(){
                 porcentagem: Porcent, 
                 URL: urlNivel, 
                 descricao: DescricaoNivel });
-                contNiveis = ArrayCriarNiveis.length
+                contNiveis = ArrayCriarNiveis.length;
             
             document.getElementById("nivel" + contNiveis).innerHTML = `<h2>Nível ${contNiveis}</h2>`;
         
@@ -245,8 +300,7 @@ function criarNiveis(){
                     <input type="text" name="" id="titulo"      placeholder="   Título do nível">
                     <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
                     <input type="text" name="" id="linkurl"     placeholder="   URL da imagem do nível">
-                    <input type="text" name="" id="descricao"   placeholder="   Descrição do nível">
-            `
+                    <input type="text" name="" id="descricao"   placeholder="   Descrição do nível">`
             }
 
         } else {
@@ -261,7 +315,7 @@ function criarNiveis(){
               document.querySelector(".container").innerHTML = `
             <div class="inputs-quizz quizz-pronto" id = "quizz-pronto">
     
-                <h2>Agora, decida os níveis</h2>
+                <h2>Seu quizz está pronto!</h2>
     
                 <div class ="img-quizz-pronto">
                     <img src="/imagens/Rectangle 34.svg" alt="">
@@ -271,7 +325,7 @@ function criarNiveis(){
               
                 <button onclick="">Acessar Quizz</button>
                   
-                <p>Voltar pra home</p>
+                <p onclick = "">Voltar pra home</p>
               
             </div>
      `;
