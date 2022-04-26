@@ -21,9 +21,9 @@ function renderizarQuizzes(objetoQuizzes){
     for(let i = 0; i < objetoQuizzes.data.length; i++){
     document.querySelector("main section").innerHTML += `
     
-    <div>
+    <div onclick="buscarQuizzSelecionado(this)" id="${objetoQuizzes.data[i].id}">
         <div class="gradiente"></div>
-        <img src="${objetoQuizzes.data[i].image}" id="${objetoQuizzes.data[i].id}" onclick="buscarQuizzSelecionado(this)">
+        <img src="${objetoQuizzes.data[i].image}">
         <p>${objetoQuizzes.data[i].title}</p>
     </div> 
         
@@ -37,7 +37,6 @@ const infosQuizz = {
 };
 
 function buscarQuizzSelecionado(objetoQuizzes){
-    
     if(objetoQuizzes.status == '200'){
         infosQuizz.quizzes = objetoQuizzes.data;
         
@@ -46,10 +45,40 @@ function buscarQuizzSelecionado(objetoQuizzes){
     }
 
     if((infosQuizz.quizzes != "") && (infosQuizz.idQuizz != "")){
-        acessarQuizzSelecionado();
+        acessarQuizzSelecionado(objetoQuizzes);
     }
 }
-function acessarQuizzSelecionado(elemento){
+function acessarQuizzSelecionado(parametro){
+    const promessa = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${parametro.id}`)
+    promessa.then(sucessoAcessarQuizz)
+}
+function sucessoAcessarQuizz(elemento) {
+    const dados = elemento.data
+    console.log(dados)
+    document.querySelector(".container").innerHTML = `
+    <div class="banner" style="background-image: url(${dados.image});">
+        <h2>${dados.title}</h2>
+        </div>
+        `
+    for (let j=0; j< dados.questions.length; j++) {
+        document.querySelector(".container").innerHTML += `
+        <div class="pergunta-quizz">
+            <div class="cor-pergunta" style="background-color: ${dados.questions[j].color}">
+                <h3>${dados.questions[j].title}</h3>
+            </div>
+        </div>     
+        `
+        for (let i=0; i < dados.questions[j].answers.length; i++) {
+            document.querySelector(".pergunta-quizz").innerHTML += `
+            <div class="respostas ${dados.questions[j].answers[i].isCorrectAnswer}">
+            <div class="img-quizz">
+            <img src="${dados.questions[j].answers[i].image}" alt="">
+            </div>
+            <p>${dados.questions[j].answers[i].text}</p>
+            </div>
+            `
+        }
+    }
 }
 
 function criarQuizz(elemento){
@@ -431,7 +460,6 @@ function proximoNivel(){
     arrayproximoNivel =[];      
 }
 function tratarSucesso(resposta) {
-    console.log(resposta.data);
     idCriado = Number(resposta.data.id)
     document.getElementById("crie-seus-niveis").style.display = "none";
     let request = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${idCriado}`)
@@ -474,4 +502,14 @@ function QuizzPronto(){
     let promise = axios.post("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes", objetoQuizzPronto);
     promise.then(tratarSucesso);
     promise.catch(tratarErro);
+}
+
+function selecionarResposta(parametro) {
+    const respostaSelecionada = parametro.parentNode;
+    const bloquearNovaResposta = respostaSelecionada.querySelectorAll(".pergunta-quizz");
+    for (let i=0; i<bloquearNovaResposta.length; i++) {
+        bloquearNovaResposta[i].classList.remove("pergunta-quizz")
+        bloquearNovaResposta[i].classList.add("respondido")
+        parametro.classList("escolhida")
+    }
 }
