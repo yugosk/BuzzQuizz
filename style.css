@@ -17,13 +17,17 @@ header{
 
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-
 body .container{
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.container img{
+    height: 180px;
+    width: 100%;
+    border-radius: 5px;
 }
 
 section.criar-quizz{
@@ -58,6 +62,48 @@ section p{
     color:#ec362d;
     font-size: 20px;
 }
+
+section .todos-quizzes{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+section.seus-quizzes{
+    width: 70%;
+    padding: 20px 0;
+}
+.seus-quizzes>div:nth-child(1){
+    width: 160px;
+    margin-bottom: 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.seus-quizzes ion-icon{
+    font-size: 30px;
+    color:#ec362d;
+}
+.seus-quizzes>div:nth-child(1) h2{
+    margin: 0;
+}
+
+section .opcao-quizz{
+    margin-bottom: 15px;
+    position: relative;
+    width: 32%;
+    z-index: 0;
+}
+section .opcao-quizz p{
+    font-size: 19px;
+    color: #ffffff;
+    position: absolute;
+    bottom: 15px;
+    left: 10px;
+    z-index: 4;
+}
 .container main{
     height: 100%;
     width: 70%;
@@ -73,21 +119,31 @@ section p{
     width: 32%;
     margin-bottom: 20px;
     position: relative;
+}
 
-}
-.container main section img{
-    height: 180px;
-    width: 100%;
-}
 .container main section div p{
+
     font-size: 19px;
     font-weight: 400;
     color: #ffffff;
     text-align: left;
     word-break: break-word;
+
+    margin-left: 10px;
+    margin-bottom: 10px;
     position: absolute;
+    z-index: 3;
     left: 0;
     bottom: 0;
+}
+.container main section div .gradiente{
+    height: 180px;
+    width: 100%;
+    border-radius: 5px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.62%, rgba(0, 0, 0, 0.8) 100%);
+    
+    position: absolute;
+    z-index: 2;
 }
 section.inputs-quizz{
     height: 100%;
@@ -98,7 +154,7 @@ section.inputs-quizz{
     justify-content: space-between;
     align-items: center;
 }
-section.inputs-quizz h2{
+h2{
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 10px;   
