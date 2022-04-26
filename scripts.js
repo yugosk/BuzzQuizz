@@ -107,6 +107,7 @@ function criarPerguntas(quantidadePerguntas){
         <section class="inputs-quizz crie-suas-perguntas" id = "crie-suas-perguntas">
 
             <h2 class="nome-sessoes">Criar suas perguntas</h2>
+            <div class="perguntas">
             <div>
                 <h2>Pergunta 1</h2>
                 <input type="text" name="" id="texto-pergunta" placeholder="   Texto da pergunta">
@@ -132,7 +133,8 @@ function criarPerguntas(quantidadePerguntas){
 
                 <input type="text" name="" id="" placeholder="   Resposta incorreta 4">
                 <input type="text" name="" id="" placeholder="   URL da imagem">
-            </div>  
+            </div>
+            </div>
     `;
 
     for(let i = 1; i < quantidadePerguntas; i++){
@@ -141,7 +143,7 @@ function criarPerguntas(quantidadePerguntas){
         
         <div class="adicionar-pergunta">
             <h2>Pergunta ${i+1}</h2>
-            <ion-icon name="create-outline" onclick="adicionarPergunta(this)"></ion-icon>
+            <ion-icon name="create-outline" onclick="armazenarPerguntas(this)"></ion-icon>
         </div>
         
         `;
@@ -157,20 +159,56 @@ function criarPerguntas(quantidadePerguntas){
     }
 }
 
-function validarPerguntas() {
-    const validacaoHex = /^#[0-9A-F]{6}$/i
-    const validacaoURL = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]))?(?:\?([^#]))?(?:#(.*))?$/
-    const pergunta = document.querySelectorAll("input")
-    if (pergunta[0].value.length>=20 || validacaoHex.test(pergunta[1].value) === true || pergunta[2].value !== "" || pergunta[3].value
-    ||pergunta[4].value !== "" || validacaoURL.test(pergunta[5].value === true)) {
-        if (pergunta[6].value !== "" || validacaoURL.test(pergunta[7].value === true)) {
-            if (pergunta[8].value !== "" || validacaoURL.test(pergunta[9].value === true)) {
-                if (pergunta[10].value !== "" || validacaoURL.test(pergunta[11].value === true)) {
-                    criarNiveis()
-                } else {if (pergunta[10].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
-            } else {if (pergunta[8].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
-        } else {if (pergunta[6].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
-    } else {alert("Preencha os campos corretamente, por favor.")}
+const arrayPerguntas = [];
+
+function armazenarPerguntas() {
+    const dadosPergunta = [];
+    const validacaoHex = /^#+[0-9A-F]{6}$/i;
+    const validacaoImagem = /\.(jpeg|jpg|gif|png)$/;
+    const pergunta = document.querySelectorAll("input");
+    const validarPergunta = [];
+    for (let i=0; i<12; i++) {
+        validarPergunta.push(false);
+        dadosPergunta[i] = pergunta[i].value;
+    };
+    if (pergunta[0].value.length >= 20) {
+        validarPergunta[0] = true;
+    };
+    if (validacaoHex.test(pergunta[1]) === true) {
+        validarPergunta[1] = true;
+    };
+    if (pergunta[2].value !== "") {
+        validarPergunta[2] = true;
+    };
+    if (validacaoImagem.test(pergunta[3].value) === true) {
+        validarPergunta[3] = true;
+    };
+    if (pergunta[4].value !== "") {
+        validarPergunta[4] = true;
+    };
+    if (validacaoImagem.test(pergunta[5].value) === true) {
+        validarPergunta[5] = true;
+    };
+    if (pergunta[6].value === "" || (pergunta[6].value !== "" && validacaoImagem.test(pergunta[7]) === true)) {
+        validarPergunta[6] = true;
+        validarPergunta[7] = true;
+    };
+    if (pergunta[8].value === "" || (pergunta[8].value !== "" && validacaoImagem.test(pergunta[9]) === true)) {
+        validarPergunta[8] = true;
+        validarPergunta[9] = true;
+    };
+    if (pergunta[10].value === "" || (pergunta[10].value !== "" && validacaoImagem.test(pergunta[11]) === true)) {
+        validarPergunta[10] = true;
+        validarPergunta[11] = true;
+    };
+    if (!validarPergunta.includes(false)) {
+        arrayPerguntas.push(dadosPergunta);
+        proximaPergunta();
+    } else (alert("Preencha os campos corretamente, por favor."))
+}
+
+function proximaPergunta(secao) {
+    
 }
 
 let quantNiveis;
