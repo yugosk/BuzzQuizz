@@ -228,7 +228,7 @@ section.inputs-quizz .adicionar-pergunta h2{
     width: 500px;
     height: 266px;
 }
-.img-quizz-pronto label{
+.quizz-pronto{
     position: absolute;
     font-weight: 400;
     font-size: 23px;
@@ -280,4 +280,39 @@ div.inputs-quizz p{
     font-weight: 400;
     text-align: center;
     color: #FFFFFF; 
+}
+
+.banner{
+    width: 100%;
+    position: absolute;
+    height: 227px;
+    top: 80px;
+}
+
+.img-quizz{
+    width: 43%;
+    height: 26%;
+}
+
+.img-quizz > img{
+    object-fit: fill;
+}
+
+.pergunta-quizz{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    top: 227px;
+    margin-top: 42px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    width: 52%;
+    height: 52%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05));
+}
+
+.cor-pergunta{
+    width: 66%;
+    height: 20%;
 }
