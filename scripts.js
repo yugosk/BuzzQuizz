@@ -173,6 +173,15 @@ function validarPerguntas() {
     } else {alert("Preencha os campos corretamente, por favor.")}
 }
 
+function AbrindoQuizz(){
+
+
+
+
+
+
+
+}
 let quantNiveis;
 let contNiveis;
 let contador = 0;
