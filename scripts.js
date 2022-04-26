@@ -338,9 +338,6 @@ function proximaPergunta() {
     
             <input type="text" name="" id="" placeholder="   Resposta incorreta 3">
             <input type="text" name="" id="" placeholder="   URL da imagem">
-    
-            <input type="text" name="" id="" placeholder="   Resposta incorreta 4">
-            <input type="text" name="" id="" placeholder="   URL da imagem">
         </div>
         `;
     } else {
@@ -557,29 +554,5 @@ function selecionarResposta(parametro) {
         <div>
         `
     }
-<<<<<<< HEAD
-
-    function QuizzPronto(){
-    
-        document.getElementById("crie-seus-niveis").style.display = "none";
-              document.querySelector(".container").innerHTML = `
-            <div class="inputs-quizz quizz-pronto" id = "quizz-pronto">
-    
-                <h2>Seu quizz está pronto!</h2>
-    
-                <div class ="img-quizz-pronto">
-                    <img src="/imagens/Rectangle 34.svg" alt="">
-                    <label>O quão Potterhead é você?</label>
-                </div>
-                  
-              
-                <button onclick="">Acessar Quizz</button>
-                  
-                <p onclick = "">Voltar pra home</p>
-              
-            </div>
-     `;
-    }
-=======
 }
->>>>>>> aea5a3192b4079216e8c2628e911ae51ecf44331
+
