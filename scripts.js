@@ -1,3 +1,10 @@
+let titulo;
+let imagem;
+let questions;
+let levels;
+let idCriado = 0;
+let dadosQuizz;
+
 function solicitarQuizzes(){
 
     const promisse = axios.get("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes");
@@ -115,8 +122,8 @@ function verificarCriarQuizz(){
         
         console.log(meuQuizz);
         criarPerguntas(quantidadePerguntas);
-        objetoQuizzPronto.title = inputsCriarQuizz[0].value;
-        objetoQuizzPronto.image = inputsCriarQuizz[1].value;
+        titulo = inputsCriarQuizz[0].value;
+        imagem = inputsCriarQuizz[1].value;
     }
       quantNiveis = inputsCriarQuizz[3].value;
       return quantNiveis;
@@ -154,8 +161,6 @@ function criarPerguntas(quantidadePerguntas){
                 <input type="text" name="" id="" placeholder="   Resposta incorreta 3">
                 <input type="text" name="" id="" placeholder="   URL da imagem">
 
-                <input type="text" name="" id="" placeholder="   Resposta incorreta 4">
-                <input type="text" name="" id="" placeholder="   URL da imagem">
             </div>
             </div>
     `;
@@ -183,12 +188,6 @@ function criarPerguntas(quantidadePerguntas){
 }
 
 const arrayPerguntas = [];
-let objetoQuizzPronto = {
-    title: "",
-    image: "",
-    questions: [],
-    levels: []
-};
 
 function armazenarPerguntas() {
     const dadosPergunta = [];
@@ -197,8 +196,7 @@ function armazenarPerguntas() {
     const pergunta = document.querySelectorAll("input");
     const validarPergunta = [];
     const respostas = [];
-    const questions = [];
-    for (let i=0; i<12; i++) {
+    for (let i=0; i<10; i++) {
         validarPergunta.push(false);
         dadosPergunta[i] = pergunta[i].value;
     };
@@ -228,10 +226,6 @@ function armazenarPerguntas() {
         validarPergunta[8] = true;
         validarPergunta[9] = true;
     };
-    if (pergunta[10].value === "" || (pergunta[10].value !== "" && validacaoImagem.test(pergunta[11].value) === true)) {
-        validarPergunta[10] = true;
-        validarPergunta[11] = true;
-    };
     if (!validarPergunta.includes(false)) {
         respostas.push({
             text: pergunta[2].value,
@@ -243,7 +237,7 @@ function armazenarPerguntas() {
             image: pergunta[5].value,
             isCorrectAnswer: false
         })
-        for (let i=6; i<12; i+=2) {
+        for (let i=6; i<10; i+=2) {
             if (pergunta[i].value !== ""){
                 respostas.push({
                     text: pergunta[i].value,
@@ -253,8 +247,8 @@ function armazenarPerguntas() {
             }
         }
         arrayPerguntas.push({
-            title: pergunta[0],
-            color: pergunta[1],
+            title: pergunta[0].value,
+            color: pergunta[1].value,
             answers: respostas,
         })
             
@@ -304,7 +298,7 @@ function proximaPergunta() {
         </div>
         `;
     } else {
-        objetoQuizzPronto.questions = arrayPerguntas;
+        questions = arrayPerguntas;
         criarNiveis();
     }
 }
@@ -351,103 +345,114 @@ function criarNiveis(){
     document.querySelector("section").innerHTML += `<button onclick="proximoNivel(this)" id="button-quizz-pronto">Finalizar Quizz</button>`;
 }
 
-    function mincaracteres(){
-
-        let titulonivel = true;
-        if (document.getElementById("titulonivel") !== null) {
-            const titulo = document.getElementById("titulonivel").value;
-                if (titulo.length < 20){
-                  titulonivel = false;                                      
-                }
-                arrayproximoNivel.push(titulonivel);
-                tituloNivel = titulo;
-                return tituloNivel;
-        }
-    }
-
-    function porcentagemmin(){
-
-        let porcentagemmin = true; 
-        const porcentagem = document.getElementById("porcentagem").value;
-            if ( 0 > porcentagem ||  porcentagem > 100){
-               porcentagemmin = false;
-            };
-            arrayproximoNivel.push(porcentagemmin);
-            Porcent = porcentagem;
-            arrayPorcent.push(Number(Porcent));
-            return Porcent;
-    }
-
-
-    function checkURL() {
-
-        const linkurl = document.getElementById("linkurl").value;
-        const urlcorreto = (linkurl.match(/\.(jpeg|jpg|gif|png)$/) != null);
-        arrayproximoNivel.push(urlcorreto);
-           urlNivel = linkurl;
-        return urlNivel;
-    }
-
-    function mincaracteresDescricao(){
-
-        let mindescricao = true;
-        const descricao = document.getElementById("descricao").value;
-        if (descricao.length < 30){                                       
-            mindescricao = false;
-        }
-            arrayproximoNivel.push(mindescricao);
-        
-        DescricaoNivel = descricao;  
-        
-        return DescricaoNivel;
-    }
-
-    function proximoNivel(){
-        mincaracteres();
-        porcentagemmin();
-        checkURL();
-        mincaracteresDescricao();
-        
-        let arr;
-        arr = arrayproximoNivel;
-        if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true) {
-            ArrayCriarNiveis.push({ 
-                title: tituloNivel,
-                image: urlNivel,
-                text: DescricaoNivel,
-                minValue: Porcent
-            });
-            
-            if (document.querySelector(".adicionar-nivel") !== null && document.querySelectorAll(".nivel-armazenado").length < (quantNiveis - 1)){
-                const elementoAnterior = document.querySelector(".adicionar-nivel");
-                const nivelAnterior = elementoAnterior.querySelector("h2").innerHTML;
-                elementoAnterior.innerHTML = `<h2>${nivelAnterior}</h2>`;
-                elementoAnterior.classList.add("nivel-armazenado");
-                elementoAnterior.classList.remove("adicionar-nivel");
-                const elementoAtual = document.querySelector(".adicionar-nivel");
-                const nivelAtual = elementoAtual.querySelector("h2").innerHTML;
-                elementoAtual.innerHTML = `
-                    <h2>${nivelAtual}</h2>
-                    <input type="text" name="" id="titulonivel"      placeholder="   Título do nível">
-                    <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
-                    <input type="text" name="" id="linkurl"     placeholder="   URL da imagem do nível">
-                    <input type="text" name="" id="descricao"   placeholder="   Descrição do nível">
-                `;
-            } else {
-                if (arrayPorcent.includes(0)) {
-                    objetoQuizzPronto.levels = ArrayCriarNiveis;
-                    QuizzPronto();
-                } else {
-                    alert("Uma das porcentagens deve ser igual a 0.")
-                    ArrayCriarNiveis.pop();
-                }
+function mincaracteres(){
+    let titulonivel = true;
+    if (document.getElementById("titulonivel") !== null) {
+        const titulo = document.getElementById("titulonivel").value;
+            if (titulo.length < 20){
+              titulonivel = false;                                      
             }
-        } else {alert("Preencha os campos corretamente, por favor.")}
-        arrayproximoNivel =[];      
+            arrayproximoNivel.push(titulonivel);
+            tituloNivel = titulo;
+            return tituloNivel;
     }
-
+}
+function porcentagemmin(){
+    let porcentagemmin = true; 
+    const porcentagem = document.getElementById("porcentagem").value;
+        if ( 0 > porcentagem ||  porcentagem > 100){
+           porcentagemmin = false;
+        };
+        arrayproximoNivel.push(porcentagemmin);
+        Porcent = porcentagem;
+        arrayPorcent.push(Number(Porcent));
+        return Porcent;
+}
+function checkURL() {
+    const linkurl = document.getElementById("linkurl").value;
+    const urlcorreto = (linkurl.match(/\.(jpeg|jpg|gif|png)$/) != null);
+    arrayproximoNivel.push(urlcorreto);
+       urlNivel = linkurl;
+    return urlNivel;
+}
+function mincaracteresDescricao(){
+    let mindescricao = true;
+    const descricao = document.getElementById("descricao").value;
+    if (descricao.length < 30){                                       
+        mindescricao = false;
+    }
+        arrayproximoNivel.push(mindescricao);
+    
+    DescricaoNivel = descricao;  
+    
+    return DescricaoNivel;
+}
+function proximoNivel(){
+    mincaracteres();
+    porcentagemmin();
+    checkURL();
+    mincaracteresDescricao();
+    
+    let arr;
+    arr = arrayproximoNivel;
+    if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true) {
+        ArrayCriarNiveis.push({ 
+            title: tituloNivel,
+            image: urlNivel,
+            text: DescricaoNivel,
+            minValue: Porcent
+        });
+        
+        if (document.querySelector(".adicionar-nivel") !== null && document.querySelectorAll(".nivel-armazenado").length < (quantNiveis - 1)){
+            const elementoAnterior = document.querySelector(".adicionar-nivel");
+            const nivelAnterior = elementoAnterior.querySelector("h2").innerHTML;
+            elementoAnterior.innerHTML = `<h2>${nivelAnterior}</h2>`;
+            elementoAnterior.classList.add("nivel-armazenado");
+            elementoAnterior.classList.remove("adicionar-nivel");
+            const elementoAtual = document.querySelector(".adicionar-nivel");
+            const nivelAtual = elementoAtual.querySelector("h2").innerHTML;
+            elementoAtual.innerHTML = `
+                <h2>${nivelAtual}</h2>
+                <input type="text" name="" id="titulonivel"      placeholder="   Título do nível">
+                <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
+                <input type="text" name="" id="linkurl"     placeholder="   URL da imagem do nível">
+                <input type="text" name="" id="descricao"   placeholder="   Descrição do nível">
+            `;
+        } else {
+            if (arrayPorcent.includes(0)) {
+                levels = ArrayCriarNiveis;
+                QuizzPronto();
+            } else {
+                alert("Uma das porcentagens deve ser igual a 0.")
+                ArrayCriarNiveis.pop();
+            }
+        }
+    } else {alert("Preencha os campos corretamente, por favor.")}
+    arrayproximoNivel =[];      
+}
 function tratarSucesso(resposta) {
     console.log(resposta.data);
+    idCriado = Number(resposta.data.id)
+    document.getElementById("crie-seus-niveis").style.display = "none";
+    let request = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${idCriado}`)
+    request.then(processarResposta);
+    document.querySelector(".container").innerHTML = `
+    <div class="inputs-quizz quizz-pronto" id = "quizz-pronto">
+
+        <h2>Seu quizz está pronto!</h2>
+
+        <div class ="img-quizz-pronto">
+            <img src="${dadosQuizz.image}" alt="">
+            <label>${dadosQuizz.title}</label>
+        </div>
+          
+      
+        <button onclick="">Acessar Quizz</button>
+          
+        <p onclick = "">Voltar pra home</p>
+      
+    </div>
+`
 }
 
 function tratarErro(erro) {
@@ -455,28 +460,18 @@ function tratarErro(erro) {
     console.log("Mensagem de erro:" + erro.response.data);
 }
 
-    function QuizzPronto(){
-        let promise = axios.post("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes", objetoQuizzPronto);
-        promise.then(tratarSucesso);
-        promise.catch(tratarErro);
+function processarResposta(resposta) {
+    dadosQuizz = resposta.data;
+}
 
-        document.getElementById("crie-seus-niveis").style.display = "none";
-
-              document.querySelector(".container").innerHTML = `
-            <div class="inputs-quizz quizz-pronto" id = "quizz-pronto">
-    
-                <h2>Seu quizz está pronto!</h2>
-    
-                <div class ="img-quizz-pronto">
-                    <img src="/imagens/Rectangle 34.svg" alt="">
-                    <label>O quão Potterhead é você?</label>
-                </div>
-                  
-              
-                <button onclick="">Acessar Quizz</button>
-                  
-                <p onclick = "">Voltar pra home</p>
-              
-            </div>
-     `;
-    }
+function QuizzPronto(){
+    const objetoQuizzPronto = {
+        title: titulo,
+        image: imagem,
+        questions: questions,
+        levels: levels
+    };     
+    let promise = axios.post("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes", objetoQuizzPronto);
+    promise.then(tratarSucesso);
+    promise.catch(tratarErro);
+}
