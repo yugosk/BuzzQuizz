@@ -122,16 +122,28 @@ section .opcao-quizz p{
 }
 
 .container main section div p{
-    
+
     font-size: 19px;
     font-weight: 400;
     color: #ffffff;
     text-align: left;
     word-break: break-word;
+
+    margin-left: 10px;
+    margin-bottom: 10px;
     position: absolute;
     z-index: 3;
     left: 0;
     bottom: 0;
+}
+.container main section div .gradiente{
+    height: 180px;
+    width: 100%;
+    border-radius: 5px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.62%, rgba(0, 0, 0, 0.8) 100%);
+    
+    position: absolute;
+    z-index: 2;
 }
 section.inputs-quizz{
     height: 100%;
@@ -142,7 +154,25 @@ section.inputs-quizz{
     justify-content: space-between;
     align-items: center;
 }
-section.inputs-quizz h2{
+
+section.inputs-quizz .perguntas{
+    height: 100%;
+    width: 90%;
+    padding: 0 0;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+
+section.inputs-quizz .adicionar-pergunta{
+    width: 90%;
+}
+
+section.inputs-quizz .pergunta-armazenada{
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+h2{
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 10px;   
@@ -153,7 +183,7 @@ section.inputs-quizz .nome-sessoes{
 section.inputs-quizz div{
     background-color: #FFFFFF;
     height: 100%;
-    width: 90%;
+
 
     padding: 20px 20px;
     box-sizing: border-box;
@@ -192,14 +222,6 @@ section.inputs-quizz button {
     text-align: center;
     color: #FFFFFF;
 }
-.inputs-quizz.comece-pelo-comeco{
-    
-}
-.inputs-quizz.crie-suas-perguntas{
-    
-}
-
-
 .inputs-quizz div.respostas{
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
 }
@@ -221,6 +243,12 @@ section.inputs-quizz .adicionar-pergunta h2{
     display: flex;
     align-items: center;
 }
+
+.nivel-armazenado{
+    width: 90%;
+    margin-bottom: 20px;
+}
+
 .img-quizz-pronto{
     flex-direction: column;
     display: inline-block;
@@ -241,6 +269,7 @@ section.inputs-quizz .adicionar-pergunta h2{
     font-size: 25px;
     margin-top: 20px;
     position: relative;
+    width: 90%;
 }
 .adicionar-nivel ion-icon{
     position: absolute;
@@ -282,37 +311,104 @@ div.inputs-quizz p{
     color: #FFFFFF; 
 }
 
-.banner{
+.img-topo{
     width: 100%;
-    position: absolute;
+    height: 10%;
+}
+.img-topo img{
+    width: 100%;
     height: 227px;
-    top: 80px;
 }
+.questions{
+    margin: 0 auto;
+    margin-top: 42px;
 
-.img-quizz{
-    width: 43%;
-    height: 26%;
-}
-
-.img-quizz > img{
-    object-fit: fill;
-}
-
-.pergunta-quizz{
     display: flex;
     align-items: center;
     flex-direction: column;
-    position: relative;
-    top: 227px;
-    margin-top: 42px;
-    box-sizing: border-box;
-    flex-wrap: wrap;
-    width: 52%;
-    height: 52%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05));
+    width: 50%;
+    height: 400px;
+    background-color: #e01675d5;
+}
+.Pergunta{
+    width: 90%;
+    height: 60px;
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2d30ec;
+}
+.respostas{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+}
+.respostas spam{
+    display: flex;
+    flex-direction: column;
+}
+.respostas div{
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 125px;
+    margin-right: 25px;
+    margin-top: 25px;
+}
+.resposta1{
+    background-color: #ec362d;
+}
+.resposta2{
+    background-color: #888383;
+}
+.resposta3{
+    background-color: #2d30ec;
+}
+.resposta4{
+    background-color: #cccf0b;
 }
 
-.cor-pergunta{
-    width: 66%;
-    height: 20%;
+.ResultadoFinal{
+    margin: 0 auto;
+    margin-top: 42px;
+    margin-bottom: 42px;
+
+    width: 50%;
+    height: 380px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: violet;
+}
+
+.ResultadoFinal .ResultadoTitulo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 90%;
+    height: 40px;
+    margin-top: 18px;
+    background-color: #cccf0b;
+}
+.ResultadoFinal spam{
+    display: flex;
+    width: 90%;
+    margin-top: 15px;
+}
+.ResultadoFinal img{
+    margin-right: 20px;
+    width: 400px;
+    height: 280px; 
+}
+.ResultadoFinal h5{
+font-weight: 700;
+font-size: 19px;
+line-height: 25px;
+
+color: #484848;  
 }

@@ -80,14 +80,14 @@ function sucessoAcessarQuizz(elemento) {
             if(i=0 || (i=2)) {
                 document.querySelector(".respostas").innerHTML += `
                 <spam>
-                <div class="resposta${i+1} respostas ${dados.questions[j].answers[i].isCorrectAnswer}" onclick="selecionarResposta(this)">
+                <div class="resposta${i+1} respostas ${JSON.stringify(dados.questions[j].answers[i].isCorrectAnswer)}" onclick="selecionarResposta(this)">
                 <img src="${dados.questions[j].answers[i].image}" alt="">
                 <p>${dados.questions[j].answers[i].text}</p>
                 </div>
                 `
             } else {
                 document.querySelector(".respostas").innerHTML += `
-                <div class="resposta${i+1} respostas ${dados.questions[j].answers[i].isCorrectAnswer}" onclick="selecionarResposta(this)">
+                <div class="resposta${i+1} respostas ${JSON.stringify(dados.questions[j].answers[i].isCorrectAnswer)}" onclick="selecionarResposta(this)">
                 <img src="${dados.questions[j].answers[i].image}" alt="">
                 <p>${dados.questions[j].answers[i].text}</p>
                 </div>
@@ -530,6 +530,7 @@ function QuizzPronto(){
 
 
 function selecionarResposta(parametro) {
+    let k;
     const respostaSelecionada = parametro.parentNode;
     const bloquearNovaResposta = respostaSelecionada.querySelectorAll(".respostas");
     if (bloquearNovaResposta.length<2) {
@@ -542,14 +543,22 @@ function selecionarResposta(parametro) {
     const verificarCompleto = document.querySelectorAll(".escolhida");
     const acertos = document.querySelectorAll(".escolhida.true");
     if (verificarCompleto.length === numPerguntas) {
+        levels.sort((a,b) => {
+            return b.minValue - a.minValue;
+        })
+        for (let i=0; i<levels.length; i++) {
+            if (acertos > levels[i].minValue) {
+                k = i;
+            }
+        }
         document.querySelector(".ColumnQuestions").innerHTML += `
         <div class="ResultadoFinal">
         <spam class="ResultadoTitulo">
-        <h3>${Math.round(acertos/numPerguntas)}% de acerto: titulo de cada nivel<h3>
+        <h3>${Math.round(acertos/numPerguntas)}% de acerto: ${levels[k].title}<h3>
         </spam>
         <span>
-        <div><img src="imagem a ser colocada" alt=""></div>
-        <div><h5>descrição de cada nivel<h5><div>
+        <div><img src="${levels[k].image}" alt=""></div>
+        <div><h5>${levels[k].text}<h5><div>
         </span>
         <div>
         `
