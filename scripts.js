@@ -11,17 +11,19 @@ solicitarQuizzes();
 
 function renderizarQuizzes(objetoQuizzes){
 
-    for(let i = 0; i < objetoQuizzes.data.length; i++)
+    for(let i = 0; i < objetoQuizzes.data.length; i++){
     document.querySelector("main section").innerHTML += `
     
     <div>
+        <div class="gradiente"></div>
         <img src="${objetoQuizzes.data[i].image}" id="${objetoQuizzes.data[i].id}" onclick="buscarQuizzSelecionado(this)">
         <p>${objetoQuizzes.data[i].title}</p>
     </div> 
-
-    `;
-    buscarQuizzSelecionado(objetoQuizzes);
+        
+        `;}
+        buscarQuizzSelecionado(objetoQuizzes);
 }
+
 
 const infosQuizz = {
     quizzes: "",
@@ -41,13 +43,18 @@ function buscarQuizzSelecionado(objetoQuizzes){
         acessarQuizzSelecionado();
     }
 }
-function acessarQuizzSelecionado(){
-    
+function acessarQuizzSelecionado(elemento){
 }
 
-function criarQuizz(){
+function criarQuizz(elemento){
+    
+    if(elemento.id == "criar-botao-grande"){
 
-    document.getElementById("criar-quizz").style.display = "none";
+        document.getElementById("criar-quizz").style.display = "none";
+    } else if(elemento.id == "botao-criar-pequeno"){
+
+        document.getElementById("seus-quizzes").style.display = "none";
+    }
     
     document.querySelector(".container").innerHTML = `
     
@@ -63,7 +70,6 @@ function criarQuizz(){
     </section>
     `;
 
-    // document.getElementById("button-criar-perguntas").disabled = "true";
 }
 
 function verificarCriarQuizz(){
@@ -79,20 +85,36 @@ function verificarCriarQuizz(){
         }
     }
     
+    const meuQuizz = [{
+        titulo: "",
+        urlQuizz: "",
+        quantidadePerguntas: "",
+        quantidadeNiveis: ""
+    }];
+
     if((inputsCriarQuizz[0].value.length >= 20) && (inputsCriarQuizz[0].value.length <= 65)){
         validarBotao[0] = true;
+        localStorage.setItem("titulo-quizz", inputsCriarQuizz[0].value);
+        meuQuizz.titulo = localStorage.getItem("titulo-quizz");
     }
     if(inputsCriarQuizz[1].value.match(/\.(jpeg|jpg|gif|png)$/) != null){
         validarBotao[1] = true;
+        localStorage.setItem("url-imagem-quizz", inputsCriarQuizz[1].value);
+        meuQuizz.urlQuizz = localStorage.getItem("url-imagem-quizz");
     }
     if(parseInt(inputsCriarQuizz[2].value) >= 3){
         validarBotao[2] = true;
+        localStorage.setItem("quantidade-perguntas", inputsCriarQuizz[2].value);
+        meuQuizz.quantidadePerguntas = localStorage.getItem("quantidade-perguntas");
     }
     if(parseInt(inputsCriarQuizz[3].value) >= 2){
         validarBotao[3] = true;
+        localStorage.setItem("quantidade-niveis", inputsCriarQuizz[3].value);
+        meuQuizz.quantidadeNiveis = localStorage.getItem("quantidade-niveis");
     }
     if(!validarBotao.includes(false)){
-
+        
+        console.log(meuQuizz);
         criarPerguntas(quantidadePerguntas);
     }
       quantNiveis = inputsCriarQuizz[3].value;
@@ -107,6 +129,7 @@ function criarPerguntas(quantidadePerguntas){
         <section class="inputs-quizz crie-suas-perguntas" id = "crie-suas-perguntas">
 
             <h2 class="nome-sessoes">Criar suas perguntas</h2>
+            <div class="perguntas">
             <div>
                 <h2>Pergunta 1</h2>
                 <input type="text" name="" id="texto-pergunta" placeholder="   Texto da pergunta">
@@ -120,7 +143,7 @@ function criarPerguntas(quantidadePerguntas){
             </div>
 
             <div class="respostas">
-                <h2>Resposta Incorretas</h2>
+                <h2>Respostas Incorretas</h2>
                 <input type="text" name="" id="resposta-incorreta" placeholder="   Resposta incorreta 1">
                 <input type="text" name="" id="url-imagem-incorreta" placeholder="   URL da imagem">
 
@@ -132,7 +155,8 @@ function criarPerguntas(quantidadePerguntas){
 
                 <input type="text" name="" id="" placeholder="   Resposta incorreta 4">
                 <input type="text" name="" id="" placeholder="   URL da imagem">
-            </div>  
+            </div>
+            </div>
     `;
 
     for(let i = 1; i < quantidadePerguntas; i++){
@@ -141,7 +165,7 @@ function criarPerguntas(quantidadePerguntas){
         
         <div class="adicionar-pergunta">
             <h2>Pergunta ${i+1}</h2>
-            <ion-icon name="create-outline" onclick="adicionarPergunta(this)"></ion-icon>
+            <ion-icon name="create-outline" onclick="armazenarPerguntas(this)"></ion-icon>
         </div>
         
         `;
@@ -150,27 +174,104 @@ function criarPerguntas(quantidadePerguntas){
 
             document.querySelector(".crie-suas-perguntas").innerHTML += `
         
-            <button onclick="criarNiveis(this)" id="button-criar-niveis">Prosseguir pra criar níveis</button>
+            <button onclick="armazenarPerguntas(this)" id="button-criar-niveis">Prosseguir pra criar níveis</button>
 
         `;
         }
     }
 }
 
-function validarPerguntas() {
-    const validacaoHex = /^#[0-9A-F]{6}$/i
-    const validacaoURL = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]))?(?:\?([^#]))?(?:#(.*))?$/
-    const pergunta = document.querySelectorAll("input")
-    if (pergunta[0].value.length>=20 || validacaoHex.test(pergunta[1].value) === true || pergunta[2].value !== "" || pergunta[3].value
-    ||pergunta[4].value !== "" || validacaoURL.test(pergunta[5].value === true)) {
-        if (pergunta[6].value !== "" || validacaoURL.test(pergunta[7].value === true)) {
-            if (pergunta[8].value !== "" || validacaoURL.test(pergunta[9].value === true)) {
-                if (pergunta[10].value !== "" || validacaoURL.test(pergunta[11].value === true)) {
-                    criarNiveis()
-                } else {if (pergunta[10].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
-            } else {if (pergunta[8].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
-        } else {if (pergunta[6].value !== "") {alert("Preencha os campos corretamente, por favor.")}}
-    } else {alert("Preencha os campos corretamente, por favor.")}
+const arrayPerguntas = [];
+
+function armazenarPerguntas() {
+    const dadosPergunta = [];
+    const validacaoHex = /^#[0-9A-F]{6}$/i;
+    const validacaoImagem = /\.(jpeg|jpg|gif|png)$/;
+    const pergunta = document.querySelectorAll("input");
+    const validarPergunta = [];
+    for (let i=0; i<12; i++) {
+        validarPergunta.push(false);
+        dadosPergunta[i] = pergunta[i].value;
+    };
+    if (pergunta[0].value.length >= 20) {
+        validarPergunta[0] = true;
+    };
+    if (validacaoHex.test(pergunta[1].value) === true) {
+        validarPergunta[1] = true;
+    };
+    if (pergunta[2].value !== "") {
+        validarPergunta[2] = true;
+    };
+    if (validacaoImagem.test(pergunta[3].value) === true) {
+        validarPergunta[3] = true;
+    };
+    if (pergunta[4].value !== "") {
+        validarPergunta[4] = true;
+    };
+    if (validacaoImagem.test(pergunta[5].value) === true) {
+        validarPergunta[5] = true;
+    };
+    if (pergunta[6].value === "" || (pergunta[6].value !== "" && validacaoImagem.test(pergunta[7].value) === true)) {
+        validarPergunta[6] = true;
+        validarPergunta[7] = true;
+    };
+    if (pergunta[8].value === "" || (pergunta[8].value !== "" && validacaoImagem.test(pergunta[9].value) === true)) {
+        validarPergunta[8] = true;
+        validarPergunta[9] = true;
+    };
+    if (pergunta[10].value === "" || (pergunta[10].value !== "" && validacaoImagem.test(pergunta[11].value) === true)) {
+        validarPergunta[10] = true;
+        validarPergunta[11] = true;
+    };
+    if (!validarPergunta.includes(false)) {
+        arrayPerguntas.push(dadosPergunta);
+        proximaPergunta();
+    } else {alert("Preencha os campos corretamente, por favor.");}
+}
+
+function proximaPergunta() {
+    const elementoAnterior = document.querySelector(".perguntas");
+    const perguntaAnterior = elementoAnterior.querySelector("h2").innerHTML;
+    elementoAnterior.innerHTML = `<h2>${perguntaAnterior}</h2>`;
+    elementoAnterior.classList.add("pergunta-armazenada");
+    elementoAnterior.classList.remove("perguntas");
+
+    if (document.querySelector(".adicionar-pergunta") !== null){
+        const elementoAtual = document.querySelector(".adicionar-pergunta");
+        const perguntaAtual = elementoAtual.querySelector("h2").innerHTML;
+        elementoAtual.classList.add("perguntas");
+        elementoAtual.classList.remove("adicionar-pergunta");
+        elementoAtual.innerHTML = `
+        <div>
+            <h2>${perguntaAtual}</h2>
+            <input type="text" name="" id="texto-pergunta" placeholder="   Texto da pergunta">
+            <input type="text" name="" id="cor-quizz" placeholder="   Cor de fundo da pergunta">
+        </div>
+    
+        <div class="respostas">
+            <h2>Resposta Correta</h2>
+            <input type="text" name="" id="reposta-correta" placeholder="   Resposta correta">
+            <input type="text" name="" id="url-imagem-correta" placeholder="   URL da imagem">
+        </div>
+    
+        <div class="respostas">
+            <h2>Respostas Incorretas</h2>
+            <input type="text" name="" id="resposta-incorreta" placeholder="   Resposta incorreta 1">
+            <input type="text" name="" id="url-imagem-incorreta" placeholder="   URL da imagem">
+    
+            <input type="text" name="" id="" placeholder="   Resposta incorreta 2">
+            <input type="text" name="" id="" placeholder="   URL da imagem">
+    
+            <input type="text" name="" id="" placeholder="   Resposta incorreta 3">
+            <input type="text" name="" id="" placeholder="   URL da imagem">
+    
+            <input type="text" name="" id="" placeholder="   Resposta incorreta 4">
+            <input type="text" name="" id="" placeholder="   URL da imagem">
+        </div>
+        `;
+    } else {
+        criarNiveis();
+    }
 }
 
 function AbrindoQuizz(){
@@ -194,7 +295,7 @@ let urlNivel = "";
 let DescricaoNivel = "";
 
 function criarNiveis(){
-     
+
     document.getElementById("crie-suas-perguntas").style.display = "none";
 
     document.querySelector(".container").innerHTML = `
@@ -204,7 +305,7 @@ function criarNiveis(){
 
         <div class="adicionar-nivel" id = "nivel1">
             <h2>Nível 1</h2>
-                <input type="text" name="" id="titulo"      placeholder="   Título do nível">
+                <input type="text" name="" id="titulonivel"      placeholder="   Título do nível">
                 <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
                 <input type="text" name="" id="linkurl"     placeholder="   URL da imagem do nível">
                 <input type="text" name="" id="descricao"   placeholder="   Descrição do nível">
@@ -227,13 +328,15 @@ function criarNiveis(){
     function mincaracteres(){
 
         let titulonivel = true;
-        const titulo = document.getElementById("titulo").value;
-            if (titulo.length < 20){
-              titulonivel = false;                                      
-            }
-            arrayproximoNivel.push(titulonivel);
-            tituloNivel = titulo;
-            return tituloNivel;
+        if (document.getElementById("titulonivel") !== null) {
+            const titulo = document.getElementById("titulonivel").value;
+                if (titulo.length < 20){
+                  titulonivel = false;                                      
+                }
+                arrayproximoNivel.push(titulonivel);
+                tituloNivel = titulo;
+                return tituloNivel;
+        }
     }
 
     function porcentagemmin(){
@@ -245,7 +348,7 @@ function criarNiveis(){
             };
             arrayproximoNivel.push(porcentagemmin);
             Porcent = porcentagem;
-            arrayPorcent.push(Porcent);
+            arrayPorcent.push(Number(Porcent));
             return Porcent;
     }
 
@@ -273,16 +376,7 @@ function criarNiveis(){
         return DescricaoNivel;
     }
 
-    function proximoNivel(elemento){
-        const pai = elemento.parentNode;
-
-      for (i = 0;i< quantNiveis;i++ ){
-          if (arrayPorcent[i] == 0){
-              contador++
-              return contador
-          }
-      }
-
+    function proximoNivel(){
         mincaracteres();
         porcentagemmin();
         checkURL();
@@ -290,8 +384,44 @@ function criarNiveis(){
         
         let arr;
         arr = arrayproximoNivel;
-        if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true ){
-               
+        if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true) {
+            ArrayCriarNiveis.push({ 
+                titulo: tituloNivel, 
+                porcentagem: Porcent, 
+                URL: urlNivel, 
+                descricao: DescricaoNivel 
+            });
+            
+            if (document.querySelector(".adicionar-nivel") !== null && document.querySelectorAll(".nivel-armazenado").length < (quantNiveis - 1)){
+                const elementoAnterior = document.querySelector(".adicionar-nivel");
+                const nivelAnterior = elementoAnterior.querySelector("h2").innerHTML;
+                elementoAnterior.innerHTML = `<h2>${nivelAnterior}</h2>`;
+                elementoAnterior.classList.add("nivel-armazenado");
+                elementoAnterior.classList.remove("adicionar-nivel");
+                const elementoAtual = document.querySelector(".adicionar-nivel");
+                const nivelAtual = elementoAtual.querySelector("h2").innerHTML;
+                elementoAtual.innerHTML = `
+                    <h2>${nivelAtual}</h2>
+                    <input type="text" name="" id="titulonivel"      placeholder="   Título do nível">
+                    <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
+                    <input type="text" name="" id="linkurl"     placeholder="   URL da imagem do nível">
+                    <input type="text" name="" id="descricao"   placeholder="   Descrição do nível">
+                `;
+            } else {
+                if (arrayPorcent.includes(0)) {
+                    QuizzPronto();
+                } else {
+                    alert("Uma das porcentagens deve ser igual a 0.")
+                    ArrayCriarNiveis.pop();
+                }
+            }
+        } else {alert("Preencha os campos corretamente, por favor.")}
+        arrayproximoNivel =[];
+
+/*         if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true ){
+            pai.classList.remove("adicionar-nivel")
+            pai.classList.add("nivel-completo")
+
             ArrayCriarNiveis.push({ 
                 titulo: tituloNivel, 
                 porcentagem: Porcent, 
@@ -301,8 +431,11 @@ function criarNiveis(){
             
             document.getElementById("nivel" + contNiveis).innerHTML = `<h2>Nível ${contNiveis}</h2>`;
         
-            if(contNiveis == quantNiveis){
+            if(contNiveis == quantNiveis && arrayPorcent.includes(0)){
                 QuizzPronto();
+            } else {
+                if (contNiveis === quantNiveis) {
+                alert("Algum dos locais foram preenchidos errados")
             } else {
                 pai.innerHTML = `
                <h2>Nível ${contNiveis + 1}</h2>
@@ -310,12 +443,13 @@ function criarNiveis(){
                     <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
                     <input type="text" name="" id="linkurl"     placeholder="   URL da imagem do nível">
                     <input type="text" name="" id="descricao"   placeholder="   Descrição do nível">`
+                }
             }
 
         } else {
             alert("Algum dos locais foram preenchidos errados");       
         }
-        arrayproximoNivel =[];
+ */        
     }
 
     function QuizzPronto(){
