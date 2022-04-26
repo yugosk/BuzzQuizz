@@ -4,6 +4,8 @@ let questions;
 let levels;
 let idCriado = 0;
 let dadosQuizz;
+let numPerguntas;
+let resultadoNiveis = [];
 
 function solicitarQuizzes(){
 
@@ -55,28 +57,43 @@ function acessarQuizzSelecionado(parametro){
 function sucessoAcessarQuizz(elemento) {
     const dados = elemento.data
     console.log(dados)
+    numPerguntas = dados.questions.length
     document.querySelector(".container").innerHTML = `
-    <div class="banner" style="background-image: url(${dados.image});">
-        <h2>${dados.title}</h2>
+    <div class="img-topo" style="background-image: url(${dados.image});">
+        <h1>${dados.title}</h1>
         </div>
         `
+        document.querySelector(".container").parentNode.innerHTML +=`
+        <div class="ColumnQuestions"></div>
+        `
     for (let j=0; j< dados.questions.length; j++) {
-        document.querySelector(".container").innerHTML += `
-        <div class="pergunta-quizz">
-            <div class="cor-pergunta" style="background-color: ${dados.questions[j].color}">
+        document.querySelector(".ColumnQuestions").innerHTML += `
+        <div class="questions">
+            <div class="Pergunta" style="background-color: ${dados.questions[j].color}">
                 <h3>${dados.questions[j].title}</h3>
             </div>
+            <div class="respostas"></div>
         </div>     
         `
+
         for (let i=0; i < dados.questions[j].answers.length; i++) {
-            document.querySelector(".pergunta-quizz").innerHTML += `
-            <div class="respostas ${dados.questions[j].answers[i].isCorrectAnswer}">
-            <div class="img-quizz">
-            <img src="${dados.questions[j].answers[i].image}" alt="">
-            </div>
-            <p>${dados.questions[j].answers[i].text}</p>
-            </div>
-            `
+            if(i=0 || (i=2)) {
+                document.querySelector(".respostas").innerHTML += `
+                <spam>
+                <div class="resposta${i+1} respostas ${dados.questions[j].answers[i].isCorrectAnswer}" onclick="selecionarResposta(this)">
+                <img src="${dados.questions[j].answers[i].image}" alt="">
+                <p>${dados.questions[j].answers[i].text}</p>
+                </div>
+                `
+            } else {
+                document.querySelector(".respostas").innerHTML += `
+                <div class="resposta${i+1} respostas ${dados.questions[j].answers[i].isCorrectAnswer}" onclick="selecionarResposta(this)">
+                <img src="${dados.questions[j].answers[i].image}" alt="">
+                <p>${dados.questions[j].answers[i].text}</p>
+                </div>
+                <spam>
+                `
+            }
         }
     }
 }
@@ -504,12 +521,31 @@ function QuizzPronto(){
     promise.catch(tratarErro);
 }
 
+
+
 function selecionarResposta(parametro) {
     const respostaSelecionada = parametro.parentNode;
-    const bloquearNovaResposta = respostaSelecionada.querySelectorAll(".pergunta-quizz");
-    for (let i=0; i<bloquearNovaResposta.length; i++) {
-        bloquearNovaResposta[i].classList.remove("pergunta-quizz")
-        bloquearNovaResposta[i].classList.add("respondido")
-        parametro.classList("escolhida")
+    const bloquearNovaResposta = respostaSelecionada.querySelectorAll(".respostas");
+    if (bloquearNovaResposta.length<2) {
+        for (let i=0; i<bloquearNovaResposta.length; i++) {
+            bloquearNovaResposta[i].classList.remove("respostas")
+            bloquearNovaResposta[i].classList.add("respondido")
+            parametro.classList.add("escolhida")
+        }
+    }
+    const verificarCompleto = document.querySelectorAll(".escolhida");
+    const acertos = document.querySelectorAll(".escolhida.true");
+    if (verificarCompleto.length === numPerguntas) {
+        document.querySelector(".ColumnQuestions").innerHTML += `
+        <div class="ResultadoFinal">
+        <spam class="ResultadoTitulo">
+        <h3>${Math.round(acertos/numPerguntas)}% de acerto: titulo de cada nivel<h3>
+        </spam>
+        <span>
+        <div><img src="imagem a ser colocada" alt=""></div>
+        <div><h5>descrição de cada nivel<h5><div>
+        </span>
+        <div>
+        `
     }
 }
