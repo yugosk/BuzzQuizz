@@ -77,24 +77,12 @@ function sucessoAcessarQuizz(elemento) {
         `
 
         for (let i=0; i < dados.questions[j].answers.length; i++) {
-            if (i =1 || (i=3)) {
                 document.querySelector(".respostas").innerHTML += `
                 <div class="resposta${i+1} respostas ${JSON.stringify(dados.questions[j].answers[i].isCorrectAnswer)}" onclick="selecionarResposta(this)">
                 <img src="${dados.questions[j].answers[i].image}" alt="">
                 <p>${dados.questions[j].answers[i].text}</p>
                 </div>
-                </br>
-                `            
-  
-            } else {
-
-                document.querySelector(".respostas").innerHTML += `
-                <div class="resposta${i+1} respostas ${JSON.stringify(dados.questions[j].answers[i].isCorrectAnswer)}" onclick="selecionarResposta(this)">
-                <img src="${dados.questions[j].answers[i].image}" alt="">
-                <p>${dados.questions[j].answers[i].text}</p>
-                </div>
-                `            
-            }
+                `                        
         }
     }
 }
