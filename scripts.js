@@ -349,6 +349,15 @@ function proximaPergunta() {
     }
 }
 
+function AbrindoQuizz(){
+
+
+
+
+
+
+
+}
 let quantNiveis;
 let contNiveis;
 let contador = 0;
@@ -548,4 +557,29 @@ function selecionarResposta(parametro) {
         <div>
         `
     }
+<<<<<<< HEAD
+
+    function QuizzPronto(){
+    
+        document.getElementById("crie-seus-niveis").style.display = "none";
+              document.querySelector(".container").innerHTML = `
+            <div class="inputs-quizz quizz-pronto" id = "quizz-pronto">
+    
+                <h2>Seu quizz está pronto!</h2>
+    
+                <div class ="img-quizz-pronto">
+                    <img src="/imagens/Rectangle 34.svg" alt="">
+                    <label>O quão Potterhead é você?</label>
+                </div>
+                  
+              
+                <button onclick="">Acessar Quizz</button>
+                  
+                <p onclick = "">Voltar pra home</p>
+              
+            </div>
+     `;
+    }
+=======
 }
+>>>>>>> aea5a3192b4079216e8c2628e911ae51ecf44331
