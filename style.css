@@ -122,28 +122,16 @@ section .opcao-quizz p{
 }
 
 .container main section div p{
-
+    
     font-size: 19px;
     font-weight: 400;
     color: #ffffff;
     text-align: left;
     word-break: break-word;
-
-    margin-left: 10px;
-    margin-bottom: 10px;
     position: absolute;
     z-index: 3;
     left: 0;
     bottom: 0;
-}
-.container main section div .gradiente{
-    height: 180px;
-    width: 100%;
-    border-radius: 5px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.62%, rgba(0, 0, 0, 0.8) 100%);
-    
-    position: absolute;
-    z-index: 2;
 }
 section.inputs-quizz{
     height: 100%;
@@ -154,25 +142,7 @@ section.inputs-quizz{
     justify-content: space-between;
     align-items: center;
 }
-
-section.inputs-quizz .perguntas{
-    height: 100%;
-    width: 90%;
-    padding: 0 0;
-    box-sizing: border-box;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
-}
-
-section.inputs-quizz .adicionar-pergunta{
-    width: 90%;
-}
-
-section.inputs-quizz .pergunta-armazenada{
-    width: 90%;
-    margin-bottom: 20px;
-}
-
-h2{
+section.inputs-quizz h2{
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 10px;   
@@ -183,7 +153,7 @@ section.inputs-quizz .nome-sessoes{
 section.inputs-quizz div{
     background-color: #FFFFFF;
     height: 100%;
-
+    width: 90%;
 
     padding: 20px 20px;
     box-sizing: border-box;
@@ -228,10 +198,7 @@ section.inputs-quizz button {
 .inputs-quizz.crie-suas-perguntas{
     
 }
-.container.img-topo{
-    width: 100%;
-    background-color: blueviolet;
-}
+
 
 .inputs-quizz div.respostas{
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
@@ -254,12 +221,6 @@ section.inputs-quizz .adicionar-pergunta h2{
     display: flex;
     align-items: center;
 }
-
-.nivel-armazenado{
-    width: 90%;
-    margin-bottom: 20px;
-}
-
 .img-quizz-pronto{
     flex-direction: column;
     display: inline-block;
@@ -280,7 +241,6 @@ section.inputs-quizz .adicionar-pergunta h2{
     font-size: 25px;
     margin-top: 20px;
     position: relative;
-    width: 90%;
 }
 .adicionar-nivel ion-icon{
     position: absolute;
