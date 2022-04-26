@@ -183,7 +183,7 @@ section.inputs-quizz .nome-sessoes{
 section.inputs-quizz div{
     background-color: #FFFFFF;
     height: 100%;
-
+    width: 100%;
 
     padding: 20px 20px;
     box-sizing: border-box;
@@ -390,6 +390,16 @@ div.inputs-quizz p{
     align-items: center;
     justify-content: center;
     flex-direction: column;
+<<<<<<< HEAD
+    position: relative;
+    top: 227px;
+    margin-top: 42px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    width: 52%;
+    height: 52%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+=======
     width: 90%;
     height: 40px;
     margin-top: 18px;
@@ -404,6 +414,7 @@ div.inputs-quizz p{
     margin-right: 20px;
     width: 400px;
     height: 280px; 
+>>>>>>> f885f14448b6f8df1ce3957c4138a3f5933401e9
 }
 .ResultadoFinal h5{
 font-weight: 700;
