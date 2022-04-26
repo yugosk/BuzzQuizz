@@ -296,7 +296,7 @@ function criarNiveis(){
 
         <div class="adicionar-nivel" id = "nivel1">
             <h2>Nível 1</h2>
-                <input type="text" name="" id="titulo"      placeholder="   Título do nível">
+                <input type="text" name="" id="titulonivel"      placeholder="   Título do nível">
                 <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
                 <input type="text" name="" id="linkurl"     placeholder="   URL da imagem do nível">
                 <input type="text" name="" id="descricao"   placeholder="   Descrição do nível">
@@ -319,13 +319,15 @@ function criarNiveis(){
     function mincaracteres(){
 
         let titulonivel = true;
-        const titulo = document.getElementById("titulo").value;
-            if (titulo.length < 20){
-              titulonivel = false;                                      
-            }
-            arrayproximoNivel.push(titulonivel);
-            tituloNivel = titulo;
-            return tituloNivel;
+        if (document.getElementById("titulonivel") !== null) {
+            const titulo = document.getElementById("titulonivel").value;
+                if (titulo.length < 20){
+                  titulonivel = false;                                      
+                }
+                arrayproximoNivel.push(titulonivel);
+                tituloNivel = titulo;
+                return tituloNivel;
+        }
     }
 
     function porcentagemmin(){
@@ -337,7 +339,7 @@ function criarNiveis(){
             };
             arrayproximoNivel.push(porcentagemmin);
             Porcent = porcentagem;
-            arrayPorcent.push(Porcent);
+            arrayPorcent.push(Number(Porcent));
             return Porcent;
     }
 
@@ -365,16 +367,7 @@ function criarNiveis(){
         return DescricaoNivel;
     }
 
-    function proximoNivel(elemento){
-        const pai = elemento.parentNode;
-
-      for (i = 0;i< quantNiveis;i++ ){
-          if (arrayPorcent[i] == 0){
-              contador++
-              return contador
-          }
-      }
-
+    function proximoNivel(){
         mincaracteres();
         porcentagemmin();
         checkURL();
@@ -382,8 +375,44 @@ function criarNiveis(){
         
         let arr;
         arr = arrayproximoNivel;
-        if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true ){
-               
+        if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true) {
+            ArrayCriarNiveis.push({ 
+                titulo: tituloNivel, 
+                porcentagem: Porcent, 
+                URL: urlNivel, 
+                descricao: DescricaoNivel 
+            });
+            
+            if (document.querySelector(".adicionar-nivel") !== null && document.querySelectorAll(".nivel-armazenado").length < (quantNiveis - 1)){
+                const elementoAnterior = document.querySelector(".adicionar-nivel");
+                const nivelAnterior = elementoAnterior.querySelector("h2").innerHTML;
+                elementoAnterior.innerHTML = `<h2>${nivelAnterior}</h2>`;
+                elementoAnterior.classList.add("nivel-armazenado");
+                elementoAnterior.classList.remove("adicionar-nivel");
+                const elementoAtual = document.querySelector(".adicionar-nivel");
+                const nivelAtual = elementoAtual.querySelector("h2").innerHTML;
+                elementoAtual.innerHTML = `
+                    <h2>${nivelAtual}</h2>
+                    <input type="text" name="" id="titulonivel"      placeholder="   Título do nível">
+                    <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
+                    <input type="text" name="" id="linkurl"     placeholder="   URL da imagem do nível">
+                    <input type="text" name="" id="descricao"   placeholder="   Descrição do nível">
+                `;
+            } else {
+                if (arrayPorcent.includes(0)) {
+                    QuizzPronto();
+                } else {
+                    alert("Uma das porcentagens deve ser igual a 0.")
+                    ArrayCriarNiveis.pop();
+                }
+            }
+        } else {alert("Preencha os campos corretamente, por favor.")}
+        arrayproximoNivel =[];
+
+/*         if (arr[0] === true && arr[1] === true && arr[2] === true && arr[3] === true ){
+            pai.classList.remove("adicionar-nivel")
+            pai.classList.add("nivel-completo")
+
             ArrayCriarNiveis.push({ 
                 titulo: tituloNivel, 
                 porcentagem: Porcent, 
@@ -393,8 +422,11 @@ function criarNiveis(){
             
             document.getElementById("nivel" + contNiveis).innerHTML = `<h2>Nível ${contNiveis}</h2>`;
         
-            if(contNiveis == quantNiveis){
+            if(contNiveis == quantNiveis && arrayPorcent.includes(0)){
                 QuizzPronto();
+            } else {
+                if (contNiveis === quantNiveis) {
+                alert("Algum dos locais foram preenchidos errados")
             } else {
                 pai.innerHTML = `
                <h2>Nível ${contNiveis + 1}</h2>
@@ -402,12 +434,13 @@ function criarNiveis(){
                     <input type="text" name="" id="porcentagem" placeholder="   % de acerto mínima">
                     <input type="text" name="" id="linkurl"     placeholder="   URL da imagem do nível">
                     <input type="text" name="" id="descricao"   placeholder="   Descrição do nível">`
+                }
             }
 
         } else {
             alert("Algum dos locais foram preenchidos errados");       
         }
-        arrayproximoNivel =[];
+ */        
     }
 
     function QuizzPronto(){

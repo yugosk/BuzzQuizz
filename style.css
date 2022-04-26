@@ -249,6 +249,12 @@ section.inputs-quizz .adicionar-pergunta h2{
     display: flex;
     align-items: center;
 }
+
+.nivel-armazenado{
+    width: 90%;
+    margin-bottom: 20px;
+}
+
 .img-quizz-pronto{
     flex-direction: column;
     display: inline-block;
@@ -269,6 +275,7 @@ section.inputs-quizz .adicionar-pergunta h2{
     font-size: 25px;
     margin-top: 20px;
     position: relative;
+    width: 90%;
 }
 .adicionar-nivel ion-icon{
     position: absolute;
