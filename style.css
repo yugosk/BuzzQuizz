@@ -167,6 +167,11 @@ section.inputs-quizz .adicionar-pergunta{
     width: 90%;
 }
 
+section.inputs-quizz .pergunta-armazenada{
+    width: 90%;
+    margin-bottom: 20px;
+}
+
 h2{
     font-size: 20px;
     font-weight: 700;

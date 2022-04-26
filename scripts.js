@@ -143,7 +143,7 @@ function criarPerguntas(quantidadePerguntas){
             </div>
 
             <div class="respostas">
-                <h2>Resposta Incorretas</h2>
+                <h2>Respostas Incorretas</h2>
                 <input type="text" name="" id="resposta-incorreta" placeholder="   Resposta incorreta 1">
                 <input type="text" name="" id="url-imagem-incorreta" placeholder="   URL da imagem">
 
@@ -174,7 +174,7 @@ function criarPerguntas(quantidadePerguntas){
 
             document.querySelector(".crie-suas-perguntas").innerHTML += `
         
-            <button onclick="criarNiveis(this)" id="button-criar-niveis">Prosseguir pra criar níveis</button>
+            <button onclick="armazenarPerguntas(this)" id="button-criar-niveis">Prosseguir pra criar níveis</button>
 
         `;
         }
@@ -185,7 +185,7 @@ const arrayPerguntas = [];
 
 function armazenarPerguntas() {
     const dadosPergunta = [];
-    const validacaoHex = /^#+[0-9A-F]{6}$/i;
+    const validacaoHex = /^#[0-9A-F]{6}$/i;
     const validacaoImagem = /\.(jpeg|jpg|gif|png)$/;
     const pergunta = document.querySelectorAll("input");
     const validarPergunta = [];
@@ -196,7 +196,7 @@ function armazenarPerguntas() {
     if (pergunta[0].value.length >= 20) {
         validarPergunta[0] = true;
     };
-    if (validacaoHex.test(pergunta[1]) === true) {
+    if (validacaoHex.test(pergunta[1].value) === true) {
         validarPergunta[1] = true;
     };
     if (pergunta[2].value !== "") {
@@ -211,26 +211,67 @@ function armazenarPerguntas() {
     if (validacaoImagem.test(pergunta[5].value) === true) {
         validarPergunta[5] = true;
     };
-    if (pergunta[6].value === "" || (pergunta[6].value !== "" && validacaoImagem.test(pergunta[7]) === true)) {
+    if (pergunta[6].value === "" || (pergunta[6].value !== "" && validacaoImagem.test(pergunta[7].value) === true)) {
         validarPergunta[6] = true;
         validarPergunta[7] = true;
     };
-    if (pergunta[8].value === "" || (pergunta[8].value !== "" && validacaoImagem.test(pergunta[9]) === true)) {
+    if (pergunta[8].value === "" || (pergunta[8].value !== "" && validacaoImagem.test(pergunta[9].value) === true)) {
         validarPergunta[8] = true;
         validarPergunta[9] = true;
     };
-    if (pergunta[10].value === "" || (pergunta[10].value !== "" && validacaoImagem.test(pergunta[11]) === true)) {
+    if (pergunta[10].value === "" || (pergunta[10].value !== "" && validacaoImagem.test(pergunta[11].value) === true)) {
         validarPergunta[10] = true;
         validarPergunta[11] = true;
     };
     if (!validarPergunta.includes(false)) {
         arrayPerguntas.push(dadosPergunta);
         proximaPergunta();
-    } else (alert("Preencha os campos corretamente, por favor."))
+    } else {alert("Preencha os campos corretamente, por favor.");}
 }
 
-function proximaPergunta(secao) {
+function proximaPergunta() {
+    const elementoAnterior = document.querySelector(".perguntas");
+    const perguntaAnterior = elementoAnterior.querySelector("h2").innerHTML;
+    elementoAnterior.innerHTML = `<h2>${perguntaAnterior}</h2>`;
+    elementoAnterior.classList.add("pergunta-armazenada");
+    elementoAnterior.classList.remove("perguntas");
+
+    if (document.querySelector(".adicionar-pergunta") !== null){
+        const elementoAtual = document.querySelector(".adicionar-pergunta");
+        const perguntaAtual = elementoAtual.querySelector("h2").innerHTML;
+        elementoAtual.classList.add("perguntas");
+        elementoAtual.classList.remove("adicionar-pergunta");
+        elementoAtual.innerHTML = `
+        <div>
+            <h2>${perguntaAtual}</h2>
+            <input type="text" name="" id="texto-pergunta" placeholder="   Texto da pergunta">
+            <input type="text" name="" id="cor-quizz" placeholder="   Cor de fundo da pergunta">
+        </div>
     
+        <div class="respostas">
+            <h2>Resposta Correta</h2>
+            <input type="text" name="" id="reposta-correta" placeholder="   Resposta correta">
+            <input type="text" name="" id="url-imagem-correta" placeholder="   URL da imagem">
+        </div>
+    
+        <div class="respostas">
+            <h2>Respostas Incorretas</h2>
+            <input type="text" name="" id="resposta-incorreta" placeholder="   Resposta incorreta 1">
+            <input type="text" name="" id="url-imagem-incorreta" placeholder="   URL da imagem">
+    
+            <input type="text" name="" id="" placeholder="   Resposta incorreta 2">
+            <input type="text" name="" id="" placeholder="   URL da imagem">
+    
+            <input type="text" name="" id="" placeholder="   Resposta incorreta 3">
+            <input type="text" name="" id="" placeholder="   URL da imagem">
+    
+            <input type="text" name="" id="" placeholder="   Resposta incorreta 4">
+            <input type="text" name="" id="" placeholder="   URL da imagem">
+        </div>
+        `;
+    } else {
+        criarNiveis();
+    }
 }
 
 let quantNiveis;
@@ -245,7 +286,7 @@ let urlNivel = "";
 let DescricaoNivel = "";
 
 function criarNiveis(){
-     
+
     document.getElementById("crie-suas-perguntas").style.display = "none";
 
     document.querySelector(".container").innerHTML = `
