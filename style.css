@@ -262,7 +262,7 @@ section.inputs-quizz .adicionar-pergunta h2{
     width: 500px;
     height: 266px;
 }
-.img-quizz-pronto label{
+.quizz-pronto{
     position: absolute;
     font-weight: 400;
     font-size: 23px;

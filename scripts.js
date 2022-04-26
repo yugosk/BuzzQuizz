@@ -436,23 +436,6 @@ function tratarSucesso(resposta) {
     document.getElementById("crie-seus-niveis").style.display = "none";
     let request = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${idCriado}`)
     request.then(processarResposta);
-    document.querySelector(".container").innerHTML = `
-    <div class="inputs-quizz quizz-pronto" id = "quizz-pronto">
-
-        <h2>Seu quizz está pronto!</h2>
-
-        <div class ="img-quizz-pronto">
-            <img src="${dadosQuizz.image}" alt="">
-            <label>${dadosQuizz.title}</label>
-        </div>
-          
-      
-        <button onclick="">Acessar Quizz</button>
-          
-        <p onclick = "">Voltar pra home</p>
-      
-    </div>
-`
 }
 
 function tratarErro(erro) {
@@ -462,6 +445,23 @@ function tratarErro(erro) {
 
 function processarResposta(resposta) {
     dadosQuizz = resposta.data;
+    document.querySelector(".container").innerHTML = `
+    <div class="inputs-quizz quizz-pronto" id = "quizz-pronto">
+
+        <h2>Seu quizz está pronto!</h2>
+
+        <div class ="img-quizz-pronto">
+            <img src="${dadosQuizz.image}" alt="">
+            <h2 class="quizz-pronto">${dadosQuizz.title}</h2>
+        </div>
+          
+      
+        <button onclick="">Acessar Quizz</button>
+          
+        <p onclick = "">Voltar pra home</p>
+      
+    </div>
+`
 }
 
 function QuizzPronto(){
